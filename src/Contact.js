@@ -4,9 +4,14 @@ class Contact extends Component {
     render() {
         return (
             <div>
-                <h2>Contact</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, magnam aut animi, excepturi voluptatum placeat dolor accusantium atque iure! Animi architecto eveniet voluptatum illo ut maiores sed, autem pariatur culpa?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, magnam aut animi, excepturi voluptatum placeat dolor accusantium atque iure! Animi architecto eveniet voluptatum illo ut maiores sed, autem pariatur culpa?</p>
+                <h2>Get in touch</h2>
+                <p>Fell free to contact me. I lived in these networks</p>
+                <ul>
+                    <li>whatapp</li>
+                    <li>twitter</li>
+                    <li>linkedin</li>
+                    <li>github</li>
+                </ul>
             </div>
         );
     }
