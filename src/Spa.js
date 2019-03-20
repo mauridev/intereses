@@ -5,12 +5,25 @@ import Resume from './Resume';
 import Contact from './Contact';
 
 
+const style = {
+    color: 'red'
+}
+
+let changeColor = (style) => {
+        style.color = 'green';
+        return style;
+}   
+
+
 class Spa extends Component {
+
+ 
+
     render() {
         return(
         <HashRouter>    
             <div>
-                <h1 className="title">MAURIDOTSOFTWARE</h1>
+                <h1 className="title">MAURI<span style={changeColor(style)}>dot</span>SOFTWARE </h1>
                 <ul className="header">
                     <li><NavLink exact to='/'>Home</NavLink></li>
                     <li><NavLink to="/resume">Resume</NavLink></li>
