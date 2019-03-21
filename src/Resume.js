@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { ResumeCard } from './UtilComponents/Cards';
 
 
 class Resume extends Component {
@@ -8,23 +9,39 @@ class Resume extends Component {
                         {
                             title: 'Web Developer',
                             company: 'Unylog',
+                            website: 'unylog.com',
                             from: 'June 2014',
                             to: 'Present',
                             responsabilities: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, magnam aut animi, excepturi voluptatum placeat dolor accusantium atque iure! Animi architecto eveniet voluptatum illo ut maiores sed, autem pariatur culpa'
                         },
                         {
-                            title: 'Tecnico informatica',
-                            company: 'Unylog 2',
+                            title: 'Systems Analyst',
+                            company: 'Trust Found F.F.D.S.A.L.',
+                            website: 'ffdsal.com',
                             from: 'June 2014',
                             to: 'Present',
                             responsabilities: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, magnam aut animi, excepturi voluptatum placeat dolor accusantium atque iure! Animi architecto eveniet voluptatum illo ut maiores sed, autem pariatur culpa'
-                    }
+                         },
+                         {
+                            title: 'Web Developer',
+                            company: 'Timba Software',
+                            website: 'timbasoftware.com',
+                            from: 'January 2012',
+                            to: 'November 2012',
+                            responsabilities: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, magnam aut animi, excepturi voluptatum placeat dolor accusantium atque iure! Animi architecto eveniet voluptatum illo ut maiores sed, autem pariatur culpa'
+                         },
+                         {
+                            title: 'Web Developer',
+                            company: 'Monte Paz S.A.',
+                            website: 'montepaz.com.uy',
+                            from: 'January 2009',
+                            to: 'November 2010',
+                            responsabilities: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, magnam aut animi, excepturi voluptatum placeat dolor accusantium atque iure! Animi architecto eveniet voluptatum illo ut maiores sed, autem pariatur culpa'
+                         }
             ],
             show_professional_experience: true
     }
 
-
-    
 
 
     render() {
@@ -34,7 +51,15 @@ class Resume extends Component {
         professional_experiences = (
             <div>
             {this.state.professional_experience.map((professional_experience, index) => {
-                return <h2>{professional_experience.title}</h2>
+                return (
+                    <div>
+                    <ResumeCard 
+                            title= { professional_experience.title } 
+                            company= { professional_experience.company }
+                            responsabilities= { professional_experience.responsabilities }                            
+                            />
+                    </div>        
+                        )
             })}
             </div>
         );
@@ -42,8 +67,6 @@ class Resume extends Component {
         return (
             <div>
                 {professional_experiences}
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, magnam aut animi, excepturi voluptatum placeat dolor accusantium atque iure! Animi architecto eveniet voluptatum illo ut maiores sed, autem pariatur culpa?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, magnam aut animi, excepturi voluptatum placeat dolor accusantium atque iure! Animi architecto eveniet voluptatum illo ut maiores sed, autem pariatur culpa?</p>
             </div>
         );
     }

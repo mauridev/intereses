@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Luckiest+Guy|Rubik');
 body {
     background-color: rgba(23, 212, 70, 0.329);
-    padding: 20px;
+    padding: 5px;
     margin: 0;
 }
 
@@ -37,7 +37,8 @@ ul.header li a {
 
 .content {
     background-color: #FFF;
-    padding: 150px;
+    padding: 10px 20px 0 20px;
+    
 }
 
 .content h2 {
