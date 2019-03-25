@@ -3,5 +3,3 @@
 Pages 
 
 HOME
-RESUME
-GET IN TOUCH
