@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 @import url('https://fonts.googleapis.com/css?family=Luckiest+Guy|Rubik');
 body {
     background-color: rgba(23, 212, 70, 0.329);
@@ -10,7 +11,7 @@ h1, h2, p, ul, li {
 }
 
 h1.title { 
-    font-family: 'Luckiest Guy', cursive;
+    font-family: 'Roboto', sans-serif;
     font-size: 64px;
     font-size-adjust: inherit;
     
