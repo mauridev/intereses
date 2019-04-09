@@ -1,42 +1,310 @@
 import React, { Component } from "react";
-import CuentaCorriente from './CuentaCorriente/CuentaCorriente';
+import CtaCteItem from './CtaCteItem/CtaCteItem';
+
+
 
 class Home extends Component {
     state = {
-        datosProductor: {
-            razonSocial: 'MOVACEL SORIA HUGO EDUARDO NF',
-            rut: 70101960019,
-            industria: 'CONAPROLE',
-            finDeRemision: '30/09/17'
-        },
         cuentaCorriente: [
-            {key:2119,FECHA:"2015-11-06",IdRegistro_2:12,REFERENCIA:"Pagado por BROU",DEBITO:21021.0,CREDITO:0.0},
-            {key:2120,FECHA:"2016-03-11",IdRegistro_2:13,REFERENCIA:"CESION CONAPROLE",DEBITO:14538.0,CREDITO:0.0},
-            {key:7350,FECHA:"2016-10-18",IdRegistro_2:1,REFERENCIA:"csv CO.NA.PRO.LE. 09-2016 LTS:52.426,00 Prestación Pecuniaria  0,229 T/C:28,080 FechaTC:18/10/2016",DEBITO:0.0,CREDITO:427.55},
-            {key:9182,FECHA:"2016-11-17",IdRegistro_2:1,REFERENCIA:"csv CO.NA.PRO.LE. 10-2016 LTS:84.177,00 Prestación Pecuniaria  0,229 T/C:28,960 FechaTC:17/11/2016",DEBITO:0.0,CREDITO:665.63},
-            {key:11817,FECHA:"2016-12-16",IdRegistro_2:1,REFERENCIA:"csv CO.NA.PRO.LE. 11-2016 LTS:95.761,00 Prestación Pecuniaria  0,229 T/C:28,797 FechaTC:16/12/2016",DEBITO:0.0,CREDITO:761.51},
-            {key:13813,FECHA:"2017-01-17",IdRegistro_2:1,REFERENCIA:"csv CO.NA.PRO.LE. 12-2016 LTS:97.616,00 Prestación Pecuniaria  0,229 T/C:28,748 FechaTC:17/01/2017",DEBITO:0.0,CREDITO:777.59},
-            {key:15637,FECHA:"2017-02-17",IdRegistro_2:1,REFERENCIA:"csv CO.NA.PRO.LE. 01-2017 LTS:93.205,00 Prestación Pecuniaria  0,229 T/C:28,365 FechaTC:17/02/2017",DEBITO:0.0,CREDITO:752.47},
-            {key:17436,FECHA:"2017-03-16",IdRegistro_2:1,REFERENCIA:"csv CO.NA.PRO.LE. 02-2017 LTS:67.143,00 Prestación Pecuniaria  0,229 T/C:28,275 FechaTC:16/03/2017",DEBITO:0.0,CREDITO:543.79},
-            {key:19338,FECHA:"2017-04-19",IdRegistro_2:2,REFERENCIA:"DJ CO.NA.PRO.LE. 03-2017 LTS:68608 PP:0,217 T/C:28,485 FechaTC:19/04/2017",DEBITO:0.0,CREDITO:522.66},
-            {key:23456,FECHA:"2017-05-16",IdRegistro_2:2,REFERENCIA:"DJ CO.NA.PRO.LE. 04-2017 LTS:53880 PP:0,217 T/C:28,103 Fecha Val:07/06/2017",DEBITO:0.0,CREDITO:416.04},
-            {key:27952,FECHA:"2017-06-16",IdRegistro_2:2,REFERENCIA:"DJ CO.NA.PRO.LE. 05-2017 LTS:49227 PP:0,217 T/C:28,325 Fecha Val:08/08/2017",DEBITO:0.0,CREDITO:377.13},
-            {key:29875,FECHA:"2017-07-19",IdRegistro_2:2,REFERENCIA:"DJ CO.NA.PRO.LE. 06-2017 LTS:48517 PP:0,217 T/C:28,650 Fecha Val:14/08/2017",DEBITO:0.0,CREDITO:367.48},
-            {key:32219,FECHA:"2017-08-16",IdRegistro_2:2,REFERENCIA:"DJ CO.NA.PRO.LE. 07-2017 LTS:61134 PP:0,217 T/C:28,639 Fecha Val:07/09/2017",DEBITO:0.0,CREDITO:463.22},
-            {key:35697,FECHA:"2017-09-18",IdRegistro_2:2,REFERENCIA:"DJ CO.NA.PRO.LE. 08-2017 LTS:81957 PP:0,217 T/C:28,922 Fecha Val:26/09/2017",DEBITO:0.0,CREDITO:614.92},
-            {key:37871,FECHA:"2017-10-18",IdRegistro_2:2,REFERENCIA:"DJ CO.NA.PRO.LE. 09-2017 LTS:99056 PP:0,217 T/C:29,552 Fecha Val:30/10/2017",DEBITO:0.0,CREDITO:727.37},
-            {key:39877,FECHA:"2017-11-16",IdRegistro_2:2,REFERENCIA:"DJ CO.NA.PRO.LE. 10-2017 LTS:0 FIN REM.:30/09/2017 PP:0,217 T/C:29,440 Fecha Val:22/11/2017",DEBITO:0.0,CREDITO:0.0}
+            {
+                
+                idRegistro:338,
+                fecha: '11/12/2015',
+                referencia: 'Pagado por BROU',
+                debito: 796.00,
+                credito: 0.00,
+                saldo: -796.00,
+            },
+            {
+                idRegistro: 339,
+                fecha: '16/03/2016',
+                referencia: 'Pagado por BROU',
+                debito: 551.00,
+                credito: 0.00,
+                saldo: -1347.00,
+            },
+            {
+                idRegistro:6889,
+                fecha: '18/10/2016',
+                referencia: 'csv CO.NA.PRO.LE. 09-2016 LTS:1.707,00 Prestación Pecuniaria 0,229 T/C:28,080 FechaTC:18/10/2016',
+                debito:0.00,
+                credito:13.92,
+                saldo:-1333.08,
+            },
+            {
+                idRegistro: 8725,
+                fecha: '17/11/2016',
+                referencia: 'csv CO.NA.PRO.LE. 10-2016 LTS:1.641,00 Prestación Pecuniaria 0,229 T/C:28,960 FechaTC:17/11/2016',
+                debito: 0.00,
+                credito: 12.98,
+                saldo: -1320.10,
+            },
+            {
+                idRegistro: 10424,
+                fecha: '16/12/2016',
+                referencia: 'csv CO.NA.PRO.LE. 11-2016 LTS:1.576,00 Prestación Pecuniaria 0,229 T/C:28,797 FechaTC:16/12/2016',
+                debito: 0.00,
+                credito: 12.53,
+                saldo: -1307.57,
+            },
+            {
+                idRegistro: 12271,
+                fecha: '17/01/2017',
+                referencia: 'csv CO.NA.PRO.LE. 12-2016 LTS:1.526,00 Prestación Pecuniaria 0,229 T/C:28,748 FechaTC:17/01/2017',
+                debito: 0.00,
+                credito: 12.16,
+                saldo: -1295.41,
+            },
+            {
+                idRegistro: 15113,
+                fecha: '17/02/2017',
+                referencia: 'csv CO.NA.PRO.LE. 01-2017 LTS:1.765,00 Prestación Pecuniaria 0,229 T/C:28,365 FechaTC:17/02/2017',
+                debito: 0.00,
+                credito: 14.25,
+                saldo: -1281.16,
+            },
+            {
+                idRegistro: 17376,
+                fecha: '16/03/2017',
+                referencia: 'csv CO.NA.PRO.LE. 02-2017 LTS:102,00 Prestación Pecuniaria 0,229 T/C:28,275 FechaTC:16/03/2017',
+                debito: 0.00,
+                credito: 0.83,
+                saldo: -1280.33,
+            }
         ]
+    }
 
+    devuelvePrimerPagoPrestacion = (elemento) => {
+        return elemento.credito > 0
+    }
+
+    devuelveArrayConDebitos = () => {
+        let arrayConDebitos = null
+        this.state.cuentaCorriente.map((ctaCteItem, index) => {
+            if (ctaCteItem.debito > 0 ) {
+                arrayConDebitos.push(ctaCteItem)
+            }
+        })
+        return arrayConDebitos
+    }
+
+    calcularSaldo = () => {
+        //Obtengo el Primer Pago de Prestacion
+        let primerPagoPrestacion = this.state.cuentaCorriente.find(this.devuelvePrimerPagoPrestacion)
+        let debitosDeCtaCte = this.devuelveArrayConDebitos
+        
+           
+      
+
+        /*this.state.cuentaCorriente.map((ctaCteItem, index) =>{
+            if(ctaCteItem.credito > 0) {
+                return console.log('este index '+ index + ' es un credito ' + ctaCteItem.credito)
+            } else if(ctaCteItem.debito > 0){
+                return console.log('este index '+ index + ' es un debito ' + ctaCteItem.debito)
+            }
+            
+            
+        })*/
+        console.log(primerPagoPrestacion)
+        console.log(debitosDeCtaCte)
     }
 
 
     render() {
+
+        let cuentaCorriente = null;
+        cuentaCorriente = (
+            <div>
+                <div className="divTable"  >
+                    <div className="divTableBody">
+                  
+                    <div className="divTableRow">
+                        <div className="divTableCell">Id Registro</div>
+                        <div className="divTableCell">Indice</div>
+                        <div className="divTableCell">Fecha</div>
+                        <div className="divTableCell">Referencia</div>
+                        <div className="divTableCell">Debito</div>
+                        <div className="divTableCell">Credito</div>
+                        <div className="divTableCell">Saldo</div>
+                    </div>
+            {
+                this.state.cuentaCorriente.map((ctaCteItem, index) =>{
+                    return (
+                        <CtaCteItem
+
+                            indice={index}
+                            key={ ctaCteItem.idRegistro }
+                            idRegistro={ ctaCteItem.idRegistro }
+                            fecha={ ctaCteItem.fecha }
+                            referencia={ ctaCteItem.referencia }
+                            debito={ ctaCteItem.debito }
+                            credito={ ctaCteItem.credito }
+                            saldo={ ctaCteItem.saldo }
+                            
+                        />
+                        
+                    )
+                })
+            }
+                   </div>
+                </div>
+            </div>
+        );
+
+
+
         return (
+
             <div>
                 <h2>Calculo de intereses</h2>
-                <CuentaCorriente />
+                <p>Productor:  CURBELO RODRIGUEZ DENIS JAVIER</p>
+                <p>RUT: 20280500011</p>
+                <hr />
+                <p>Tasa de interes anual	5%</p>
+                <p>Tasa diaria efectiva:	0,000133681</p>
+                <p>Industria:	CONAPROLE</p>
+                <p>FIN DE REMISION: 	</p>
+
+                <hr />
+                <h2>Cuenta Corriente</h2>
+                
+                       { cuentaCorriente }
+                    
+                   
+                <br />
+                <h2 onClick={ this.calcularSaldo }>Calculo</h2>
+
+                <div className="divTable"  >
+                    <div className="divTableBody">
+                  
+                    <div className="divTableRow">
+                    <div className="divTableCell">Fecha</div>
+                    <div className="divTableCell">Concepto</div>
+                    <div className="divTableCell">Debe</div>
+                    <div className="divTableCell">Haber</div>
+                    <div className="divTableCell">Saldo</div>
+                    <div className="divTableCell">TC</div>
+                    <div className="divTableCell">Dias</div>
+                    <div className="divTableCell">Interes</div>
+                    <div className="divTableCell">PP $</div>
+                    </div>
+
+                    <div className="divTableRow">
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    </div>
+                    <div className="divTableRow">
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    </div>
+                    <div className="divTableRow">
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    </div>
+                    <div className="divTableRow">
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    </div>
+                    <div className="divTableRow">
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    </div>
+                    <div className="divTableRow">
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    </div>
+                    <div className="divTableRow">
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    </div>
+                    <div className="divTableRow">
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    </div>
+                    <div className="divTableRow">
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    </div>
+                    <div className="divTableRow">
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    <div className="divTableCell">&nbsp;</div>
+                    </div>
+                    </div>  
+                    </div>
+
+
             </div>
+            
         );
     }
 }
