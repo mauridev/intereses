@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CtaCteItem from './CtaCteItem/CtaCteItem';
+import CalculoSaldo from './CalculoSaldo/CalculoSaldo';
 
 
 
@@ -71,31 +72,34 @@ class Home extends Component {
                 credito: 0.83,
                 saldo: -1280.33,
             }
+        ],
+        calculosSaldo: [
+           
         ]
+    
     }
 
     devuelvePrimerPagoPrestacion = (elemento) => {
         return elemento.credito > 0
     }
 
-    devuelveArrayConDebitos = () => {
-        let arrayConDebitos = null
-        this.state.cuentaCorriente.map((ctaCteItem, index) => {
-            if (ctaCteItem.debito > 0 ) {
-                arrayConDebitos.push(ctaCteItem)
-            }
-        })
-        return arrayConDebitos
-    }
+    
 
     calcularSaldo = () => {
         //Obtengo el Primer Pago de Prestacion
         let primerPagoPrestacion = this.state.cuentaCorriente.find(this.devuelvePrimerPagoPrestacion)
         let debitosDeCtaCte = this.devuelveArrayConDebitos
         
-           
-      
+        for(let i=0; this.state.cuentaCorriente.length; i++) {
+            this.setState({ 
+                calculosSaldo: this.state.calculosSaldo.concat([debitosDeCtaCte])
+              })
+        }
+        
 
+        /*this.setState({ 
+            calculosSaldo: this.state.calculosSaldo.concat([primerPagoPrestacion])
+          })*/
         /*this.state.cuentaCorriente.map((ctaCteItem, index) =>{
             if(ctaCteItem.credito > 0) {
                 return console.log('este index '+ index + ' es un credito ' + ctaCteItem.credito)
@@ -106,7 +110,7 @@ class Home extends Component {
             
         })*/
         console.log(primerPagoPrestacion)
-        console.log(debitosDeCtaCte)
+        
     }
 
 
@@ -151,6 +155,46 @@ class Home extends Component {
             </div>
         );
 
+    let calcularSaldoRender = null
+    calcularSaldoRender =  (
+        <div>
+                <div className="divTable"  >
+                    <div className="divTableBody">
+                  
+                    <div className="divTableRow">
+                        <div className="divTableCell">Fecha</div>
+                        <div className="divTableCell">Concepto</div>
+                        <div className="divTableCell">Debe</div>
+                        <div className="divTableCell">Haber</div>
+                        <div className="divTableCell">Saldo</div>
+                        <div className="divTableCell">TC</div>
+                        <div className="divTableCell">Dias</div>
+                        <div className="divTableCell">Interes</div>
+                        <div className="divTableCell">PP $</div>
+                    </div>
+            {
+                this.state.calculosSaldo.map((calculo, index) =>{
+                    return (
+                        <CalculoSaldo
+                            fecha={ calculo.fecha }
+                            referencia={ calculo.referencia }
+                            debito={ calculo.debito }
+                            credito={ calculo.credito }
+                            saldo={ calculo.saldo }
+                            tc='15'
+                            dias='15'
+                            interes='15'
+                            pp='15'
+                            
+                        />
+                        
+                    )
+                })
+            }
+                   </div>
+                </div>
+            </div>
+    )
 
 
         return (
@@ -173,134 +217,7 @@ class Home extends Component {
                    
                 <br />
                 <h2 onClick={ this.calcularSaldo }>Calculo</h2>
-
-                <div className="divTable"  >
-                    <div className="divTableBody">
-                  
-                    <div className="divTableRow">
-                    <div className="divTableCell">Fecha</div>
-                    <div className="divTableCell">Concepto</div>
-                    <div className="divTableCell">Debe</div>
-                    <div className="divTableCell">Haber</div>
-                    <div className="divTableCell">Saldo</div>
-                    <div className="divTableCell">TC</div>
-                    <div className="divTableCell">Dias</div>
-                    <div className="divTableCell">Interes</div>
-                    <div className="divTableCell">PP $</div>
-                    </div>
-
-                    <div className="divTableRow">
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    </div>
-                    <div className="divTableRow">
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    </div>
-                    <div className="divTableRow">
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    </div>
-                    <div className="divTableRow">
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    </div>
-                    <div className="divTableRow">
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    </div>
-                    <div className="divTableRow">
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    </div>
-                    <div className="divTableRow">
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    </div>
-                    <div className="divTableRow">
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    </div>
-                    <div className="divTableRow">
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    </div>
-                    <div className="divTableRow">
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    <div className="divTableCell">&nbsp;</div>
-                    </div>
-                    </div>  
-                    </div>
+                    { calcularSaldoRender }
 
 
             </div>
