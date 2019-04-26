@@ -1,0 +1,26 @@
+<div class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Referencia</th>
+      <th scope="col">Ref ID</th>
+      <th scope="col">Debito</th>
+      <th scope="col">Credito</th>
+      <th scope="col">Saldo</th>
+      <th scope="col">Dias</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let itemCtaCte of ctaCte">
+      <th scope="row">{{ itemCtaCte.IdRegistro }}</th>
+      <th> {{ itemCtaCte.FECHA }} </th>
+      <th> {{ itemCtaCte.REFERENCIA }}  </th>
+      <th> {{ itemCtaCte.IdRegistro_2 }}  </th>
+      <th> {{ itemCtaCte.DEBITO }} </th>
+      <th> {{ itemCtaCte.CREDITO }}</th>
+      <th> SALDO </th>
+      <th> {{ itemCtaCte.dias }} </th>
+    </tr>
+  </tbody>
+</div>
