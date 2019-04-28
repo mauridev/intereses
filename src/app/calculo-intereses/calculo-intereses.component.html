@@ -13,8 +13,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let itemCtaCte of ctaCte">
-      <th scope="row">{{ itemCtaCte.IdRegistro }}</th>
-      <th> {{ itemCtaCte.FECHA }} </th>
+      <th scope="row" >{{ itemCtaCte.IdRegistro }}</th>
+      <th> {{ itemCtaCte.FECHA | date:'dd-MM-yyyy' }} </th>
       <th> {{ itemCtaCte.REFERENCIA }}  </th>
       <th> {{ itemCtaCte.IdRegistro_2 }}  </th>
       <th> {{ itemCtaCte.DEBITO }} </th>
