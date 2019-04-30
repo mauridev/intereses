@@ -270,5 +270,13 @@
         "IdRegistro_2": 2,
         "DEBITO": 0,
         "CREDITO": 83.49
+    },
+    {
+        "IdRegistro": 84273,
+        "FECHA": "2019-04-16",
+        "REFERENCIA": "DJ CO.NA.PRO.LE. 03-2019 LTS:11044 PP:0,25 T/C:34,25 Fecha Val:24/04/2019",
+        "IdRegistro_2": 2,
+        "DEBITO": 0,
+        "CREDITO": 80.61
     }
 ]

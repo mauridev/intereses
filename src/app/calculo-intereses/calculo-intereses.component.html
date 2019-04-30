@@ -1,26 +1,42 @@
-<div class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Fecha</th>
-      <th scope="col">Referencia</th>
-      <th scope="col">Ref ID</th>
-      <th scope="col">Debito</th>
-      <th scope="col">Credito</th>
-      <th scope="col">Saldo</th>
-      <th scope="col">Dias</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let itemCtaCte of ctaCte">
-      <th scope="row" >{{ itemCtaCte.IdRegistro }}</th>
-      <th> {{ itemCtaCte.FECHA | date:'dd-MM-yyyy' }} </th>
-      <th> {{ itemCtaCte.REFERENCIA }}  </th>
-      <th> {{ itemCtaCte.IdRegistro_2 }}  </th>
-      <th> {{ itemCtaCte.DEBITO }} </th>
-      <th> {{ itemCtaCte.CREDITO }}</th>
-      <th> SALDO </th>
-      <th> {{ itemCtaCte.dias }} </th>
-    </tr>
-  </tbody>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">Fecha Fin Remisión
+        <input type="date" [value]="fechaFinRemision | date:'yyyy-MM-dd'" (input)="fechaFinRemision=parseDate($event.target.value)"required>  
+    </div>
+  </div>
+</div>
+<hr>
+<div class="container">
+  
+  <div class="row" rowStyle>    
+              <div class="col-md-1">#</div>
+              <div class="col-md-1">FECHA</div>
+              <div class="col-md-2">Referencia</div>
+              <div class="col-md-1">Ref ID</div>
+              <div class="col-md-2">Debito</div>
+              <div class="col-md-2">Credito</div>
+              <div class="col-md-1">Saldo</div>
+              <div class="col-md-1">DIAS</div>
+              <div class="col-md-1">INTERES</div>
+  </div>
+  <div class="row" *ngFor="let itemCtaCte of ctaCte">    
+      <div class="col-md-1 bg-light">{{ itemCtaCte.IdRegistro }}</div>
+      <div class="col-md-1 bg-light">{{ itemCtaCte.FECHA | date:'dd-MM-yyyy' }}</div>
+      <div class="col-md-2 bg-light">{{ itemCtaCte.REFERENCIA }}</div>
+      <div class="col-md-1 bg-light">{{ itemCtaCte.IdRegistro_2 }}</div>
+      <div class="col-md-2 bg-light">{{ itemCtaCte.DEBITO }}</div>
+      <div class="col-md-2 bg-light">{{ itemCtaCte.CREDITO }}</div>
+      <div class="col-md-1 bg-light">{{ itemCtaCte.SALDO }}</div>
+      <div class="col-md-1"></div>
+      <div class="col-md-1"></div>
+      <div class="col-md-1"></div>
+      <div class="col-md-1"></div>
+      <div class="col-md-2"></div>
+      <div class="col-md-1"></div>
+      <div class="col-md-2"></div>
+      <div class="col-md-2"></div>
+      <div class="col-md-1"></div>
+      <div class="col-md-1 bg-danger">{{ itemCtaCte.dias }}</div>
+      <div class="col-md-1 bg-success">{{ itemCtaCte.intereses }}</div>
+  </div>
 </div>

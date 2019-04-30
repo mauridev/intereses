@@ -1,4 +1,4 @@
-import { ItemCtaCte } from './../classes/item-cta-cte';
+import { ItemCtaCte} from './../classes/item-cta-cte';
 import { Component, OnInit } from '@angular/core';
 
 import datosCtaCte from '../../assets/data/ctacte.json';
@@ -11,19 +11,22 @@ import datosCtaCte from '../../assets/data/ctacte.json';
 export class CalculoInteresesComponent implements OnInit {
 
 ctaCte: ItemCtaCte[] = datosCtaCte;
-
-
-
+fechaFinRemision: Date = new Date('2019/04/26');
+tasaDiariaEfectiva: number =  0.000133681;
 
 constructor() {
-
- }
+  console.log('entre al constructor');
+  let itemFinDeRemision = new ItemCtaCte();
+  itemFinDeRemision.FECHA = this.fechaFinRemision;
+  this.ctaCte.push(itemFinDeRemision);
+}
 
 
 ngOnInit() {
-  this.transformarFechas();
+  console.log('entre al OnINit');
   this.calculoAlgoritmo1();
 }
+
 
 
 
@@ -32,54 +35,58 @@ ngOnInit() {
 /////////////////////////////////////////
 */
 /* Recibe el array de CtaCte y crea un array nuevo con los que pertenecen a los estados 12 y 13
- */
+ */ 
+
 
 calculoAlgoritmo1 = () => {
-  this.itemsBeneficio();
-  this.itemsPagoDePrestacionPecuniaria();
+
+  this.calcularDiasParaCuentaCorriente();
+  this.calcularSaldosParaCuentaCorriente();
+  
+
 }
 
-itemsBeneficio = () => {
-  let itemsDelPagoBeneficio = [];
-  const demasItems = [];
-
-  let primerPagoPrestacion = {};
-  for( let item of this.ctaCte) {
-      if ( item.IdRegistro_2 === 12 || item.IdRegistro_2 === 13) {
-        itemsDelPagoBeneficio.push(item);
-      } else {
-        demasItems.push(item);
+/*Calcular Dias Para Cuenta Corriente */
+calcularDiasParaCuentaCorriente = () => {
+  let cuentaParaTrabajo = this.ctaCte.slice();
+  let cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {
+      /* Calculo los dias para los items de las la Cta Cte desde el 2do ITEM hasta el ultimo */
+      if( index < array.length - 1) {
+          itemCuenta.dias = this.calcularCantidadDias(itemCuenta.FECHA, array[index + 1].FECHA);
       }
-  }
-
-  // Verifico cual es el primer pago de prestacion pecuniaria.
-  primerPagoPrestacion = this.itemPrimerPrestacion(demasItems);
-
-  // Cuento la cantidad de DIAS que existen entre Primer Pago de Prestacion y los items de
-  // Pago Beneficio
-  itemsDelPagoBeneficio = this.calcularDiasPagoBeneficio(itemsDelPagoBeneficio, primerPagoPrestacion);
-
+  });
+  return cuentaDevuelta;
 }
 
-/* Devuelve el primer pago de prestacion, ya sea por CSV o DJ (1 o 2) respectivamente */
-itemPrimerPrestacion = (demasItems) => {
-  let primerPrestacion = {};
-  for ( let item of demasItems) {
-      if( item.IdRegistro_2 === 1 || item.IdRegistro_2 === 2) {
-        primerPrestacion = item;
-        break;
+
+/* Calcular Intereses */
+/* Saldo anterior * Dias * Tasa Diaria Efectiva */
+calcularInteresParaCuentaCorriente = () => {
+  let cuentaParaTrabajo = this.ctaCte.slice();
+  let cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {
+    
+        itemCuenta.intereses = this.calcularFormularInteres(array[index - 1].SALDO, itemCuenta.dias);
+    
+});
+  return cuentaDevuelta;
+}
+
+
+/* Calcular los Saldos */
+/* Calculo Nuevo SALDO = S - 1 +D -C + I */
+calcularSaldosParaCuentaCorriente = () => {
+  let cuentaParaTrabajo = this.ctaCte.slice();
+  let cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {
+    if ( index === 0) {
+        itemCuenta.SALDO = itemCuenta.DEBITO;
+        itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);     
+      } else { 
+        /* intereses primero y despues saldo */
       }
-  }
-  return primerPrestacion;
+});
+  return cuentaDevuelta;
 }
 
-/* Calcular dias entre dos fechas */
-calcularDiasPagoBeneficio = (pagoDeBeneficio, primerPrestacionPecuniaria) => {
-  for (let item of pagoDeBeneficio) {
-    item.dias = this.calcularCantidadDias(item.FECHA, primerPrestacionPecuniaria.FECHA);
-  }
-  return pagoDeBeneficio;
-}
 
 /* Funcion para calcular cantidad de dias entre dos fechas */
 calcularCantidadDias = (fechaMenor, fechaMayor) => {
@@ -94,32 +101,12 @@ calcularCantidadDias = (fechaMenor, fechaMayor) => {
   return Math.round(diff_en_dias);
 }
 
-/* Cuento los dias que existen entre todos los pagos de prestacion pecuniaria. ID 1 y 2 */
-itemsPagoDePrestacionPecuniaria = () => {
-  let cuentaCorriente = this.ctaCte.slice();
-  let primerValor = true;
-
-  for (let i = 0; i < cuentaCorriente.length; i++) {
-    if ( cuentaCorriente[i].IdRegistro_2 === 1 || cuentaCorriente[i].IdRegistro_2 === 2) {
-      if (primerValor == true ) {
-        primerValor = false;
-        cuentaCorriente[i].dias =  this.calcularCantidadDias(cuentaCorriente[i].FECHA, cuentaCorriente[i + 1].FECHA);
-      } else {
-        cuentaCorriente[i].dias =  this.calcularCantidadDias(cuentaCorriente[i - 1].FECHA, cuentaCorriente[i].FECHA);
-      }
-    }
-  }
-  console.log(cuentaCorriente);
-  this.ctaCte = cuentaCorriente;
+calcularFormularInteres = (saldoAnterior, dias) => {
+   return  Math.round(saldoAnterior * dias * this.tasaDiariaEfectiva);
 }
 
 
-/* Transforma todas las fechas a DATE */
-transformarFechas = () => {
-  for ( let item of this.ctaCte ) {
-    item.FECHA = new Date(item.FECHA);
-  }
-}
+
  /* Fin Calculo Algoritmo 1 */
 
 
