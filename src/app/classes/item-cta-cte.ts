@@ -3,9 +3,10 @@ export class ItemCtaCte {
     FECHA: Date;
     referencia: string;
     IdRegistro_2: number; //ID de la referencia
-    debito: number;
-    credito: number;
-    saldo: number;
+    DEBITO: number;
+    CREDITO: number;
+    SALDO: number;
     dias: number;
+    intereses: number;
 }
 
