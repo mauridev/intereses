@@ -12,19 +12,19 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 export class CalculoInteresesComponent implements OnInit {
 
 ctaCte: ItemCtaCte[] = datosCtaCte;
-fechaFinRemision: Date = new Date('2019/04/26');
+fechaFinRemision: Date = new Date();
 tasaDiariaEfectiva: number =  0.000133681;
 saldoFinal: number;
 
 constructor() {
   console.log('entre al constructor');
-  //
-  const itemFinDeRemision = new ItemCtaCte();
+  
+  /*const itemFinDeRemision = new ItemCtaCte();
   itemFinDeRemision.FECHA = this.fechaFinRemision;
   itemFinDeRemision.REFERENCIA = 'Fecha Final';
   this.ctaCte.push(itemFinDeRemision);
   this.eliminarReferenciasInteresGenerado();
-  this.ordenarPorFecha();
+  this.ordenarPorFecha();*/
 }
 
 
@@ -33,11 +33,28 @@ ngOnInit() {
   this.calculoAlgoritmo1();
 }
 
+/* Obtiene la fecha elegida del data picker */
 onDateSelect =  () => {
   console.log(this.fechaFinRemision);
+  this.eliminarReferenciasFechaFinal();
   this.calculoAlgoritmo1();
+}
 
-  
+eliminarReferenciasFechaFinal = () => {
+  for ( let i = 0; i < this.ctaCte.length; i++) {
+    if ( this.ctaCte[i].REFERENCIA === 'Fecha Final') {
+      this.ctaCte.splice(i, 1);
+    }
+ }
+}
+
+setFechaFinDeRemision = () => {
+  const itemFinDeRemision = new ItemCtaCte();
+  itemFinDeRemision.FECHA = this.fechaFinRemision;
+  itemFinDeRemision.REFERENCIA = 'Fecha Final';
+  this.ctaCte.push(itemFinDeRemision);
+  this.eliminarReferenciasInteresGenerado();
+  this.ordenarPorFecha();
 }
 
 
@@ -50,7 +67,7 @@ ordenarPorFecha = () => {
 }
 
 eliminarReferenciasInteresGenerado = () => {
-  for( let i = 0; i < this.ctaCte.length; i++){ 
+  for( let i = 0; i < this.ctaCte.length; i++) {
     if ( this.ctaCte[i].IdRegistro_2 === 4) {
       this.ctaCte.splice(i, 1);
     }
@@ -65,7 +82,7 @@ eliminarReferenciasInteresGenerado = () => {
 
 
 calculoAlgoritmo1 = () => {
-
+  this.setFechaFinDeRemision();
   this.calcularDiasParaCuentaCorriente();
   this.calcularSaldosParaCuentaCorriente();
 
