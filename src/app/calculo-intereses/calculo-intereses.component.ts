@@ -2,6 +2,7 @@ import { ItemCtaCte} from './../classes/item-cta-cte';
 import { Component, OnInit } from '@angular/core';
 
 import datosCtaCte from '../../assets/data/ctacte.json';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-calculo-intereses',
@@ -11,14 +12,19 @@ import datosCtaCte from '../../assets/data/ctacte.json';
 export class CalculoInteresesComponent implements OnInit {
 
 ctaCte: ItemCtaCte[] = datosCtaCte;
-fechaFinRemision: Date = new Date('2019/04/26');
+fechaFinRemision: Date = new Date();
 tasaDiariaEfectiva: number =  0.000133681;
+saldoFinal: number;
 
 constructor() {
   console.log('entre al constructor');
-  let itemFinDeRemision = new ItemCtaCte();
+  
+  /*const itemFinDeRemision = new ItemCtaCte();
   itemFinDeRemision.FECHA = this.fechaFinRemision;
+  itemFinDeRemision.REFERENCIA = 'Fecha Final';
   this.ctaCte.push(itemFinDeRemision);
+  this.eliminarReferenciasInteresGenerado();
+  this.ordenarPorFecha();*/
 }
 
 
@@ -27,22 +33,58 @@ ngOnInit() {
   this.calculoAlgoritmo1();
 }
 
+/* Obtiene la fecha elegida del data picker */
+onDateSelect =  () => {
+  console.log(this.fechaFinRemision);
+  this.eliminarReferenciasFechaFinal();
+  this.calculoAlgoritmo1();
+}
+
+eliminarReferenciasFechaFinal = () => {
+  for ( let i = 0; i < this.ctaCte.length; i++) {
+    if ( this.ctaCte[i].REFERENCIA === 'Fecha Final') {
+      this.ctaCte.splice(i, 1);
+    }
+ }
+}
+
+setFechaFinDeRemision = () => {
+  const itemFinDeRemision = new ItemCtaCte();
+  itemFinDeRemision.FECHA = this.fechaFinRemision;
+  itemFinDeRemision.REFERENCIA = 'Fecha Final';
+  this.ctaCte.push(itemFinDeRemision);
+  this.eliminarReferenciasInteresGenerado();
+  this.ordenarPorFecha();
+}
 
 
+ordenarPorFecha = () => {
+  this.ctaCte.sort((a,b) => {
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    return  new Date(a.FECHA).getTime() - new Date(b.FECHA).getTime();
+  });
+}
 
+eliminarReferenciasInteresGenerado = () => {
+  for( let i = 0; i < this.ctaCte.length; i++) {
+    if ( this.ctaCte[i].IdRegistro_2 === 4) {
+      this.ctaCte.splice(i, 1);
+    }
+ }
+}
 
 /* Caluculo Algoritmo 1
 /////////////////////////////////////////
 */
 /* Recibe el array de CtaCte y crea un array nuevo con los que pertenecen a los estados 12 y 13
- */ 
+ */
 
 
 calculoAlgoritmo1 = () => {
-
+  this.setFechaFinDeRemision();
   this.calcularDiasParaCuentaCorriente();
   this.calcularSaldosParaCuentaCorriente();
-  
 
 }
 
@@ -77,11 +119,15 @@ calcularInteresParaCuentaCorriente = () => {
 calcularSaldosParaCuentaCorriente = () => {
   let cuentaParaTrabajo = this.ctaCte.slice();
   let cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {
-    if ( index === 0) {
+      if ( index === 0) {
         itemCuenta.SALDO = itemCuenta.DEBITO;
-        itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);     
-      } else { 
-        /* intereses primero y despues saldo */
+        itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
+      } else if ( index === array.length - 1) {
+        itemCuenta.SALDO = array[index - 1].SALDO + array[index - 1].intereses;
+        this.saldoFinal = itemCuenta.SALDO;
+      } else {
+        itemCuenta.SALDO = array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO + array[index - 1].intereses;
+        itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
       }
 });
   return cuentaDevuelta;
@@ -102,7 +148,7 @@ calcularCantidadDias = (fechaMenor, fechaMayor) => {
 }
 
 calcularFormularInteres = (saldoAnterior, dias) => {
-   return  Math.round(saldoAnterior * dias * this.tasaDiariaEfectiva);
+   return  saldoAnterior * dias * this.tasaDiariaEfectiva;
 }
 
 

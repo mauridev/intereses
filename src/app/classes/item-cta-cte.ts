@@ -1,7 +1,7 @@
 export class ItemCtaCte {
     id: string;
     FECHA: Date;
-    referencia: string;
+    REFERENCIA: string;
     IdRegistro_2: number; //ID de la referencia
     DEBITO: number;
     CREDITO: number;
