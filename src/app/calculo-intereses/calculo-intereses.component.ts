@@ -15,27 +15,19 @@ ctaCte: ItemCtaCte[] = datosCtaCte;
 fechaFinRemision: Date = new Date();
 tasaDiariaEfectiva: number =  0.000133681;
 saldoFinal: number;
+esLaFechaFinalElUltimoDato = true;
+indiceFechaFinal: number;
 
 constructor() {
-  console.log('entre al constructor');
-  
-  /*const itemFinDeRemision = new ItemCtaCte();
-  itemFinDeRemision.FECHA = this.fechaFinRemision;
-  itemFinDeRemision.REFERENCIA = 'Fecha Final';
-  this.ctaCte.push(itemFinDeRemision);
-  this.eliminarReferenciasInteresGenerado();
-  this.ordenarPorFecha();*/
 }
 
 
 ngOnInit() {
-  console.log('entre al OnINit');
   this.calculoAlgoritmo1();
 }
 
 /* Obtiene la fecha elegida del data picker */
 onDateSelect =  () => {
-  console.log(this.fechaFinRemision);
   this.eliminarReferenciasFechaFinal();
   this.calculoAlgoritmo1();
 }
@@ -52,6 +44,7 @@ setFechaFinDeRemision = () => {
   const itemFinDeRemision = new ItemCtaCte();
   itemFinDeRemision.FECHA = this.fechaFinRemision;
   itemFinDeRemision.REFERENCIA = 'Fecha Final';
+  itemFinDeRemision.id = '000000';
   this.ctaCte.push(itemFinDeRemision);
   this.eliminarReferenciasInteresGenerado();
   this.ordenarPorFecha();
@@ -60,8 +53,6 @@ setFechaFinDeRemision = () => {
 
 ordenarPorFecha = () => {
   this.ctaCte.sort((a,b) => {
-    // Turn your strings into dates, and then subtract them
-    // to get a value that is either negative, positive, or zero.
     return  new Date(a.FECHA).getTime() - new Date(b.FECHA).getTime();
   });
 }
@@ -74,6 +65,24 @@ eliminarReferenciasInteresGenerado = () => {
  }
 }
 
+/* Obtengo el indice de la fecha final */
+indiceFechaFinalNumerico = () => {
+  const cuentaParaTrabajo = this.ctaCte.slice();
+  const indiceDeFechaFinal = cuentaParaTrabajo.findIndex(cu => cu.id === '000000');
+  this.indiceFechaFinal = indiceDeFechaFinal;
+}
+
+indiceFechaFinalBool = () => {
+  const cuentaParaTrabajo = this.ctaCte.slice();
+  const indiceDeFechaFinal = cuentaParaTrabajo.findIndex(cu => cu.id === '000000');
+  if (indiceDeFechaFinal === cuentaParaTrabajo.length - 1) {
+    this.esLaFechaFinalElUltimoDato = true;
+  } else {
+    this.esLaFechaFinalElUltimoDato = false;
+  }
+}
+
+
 /* Caluculo Algoritmo 1
 /////////////////////////////////////////
 */
@@ -83,9 +92,16 @@ eliminarReferenciasInteresGenerado = () => {
 
 calculoAlgoritmo1 = () => {
   this.setFechaFinDeRemision();
-  this.calcularDiasParaCuentaCorriente();
-  this.calcularSaldosParaCuentaCorriente();
+  this.indiceFechaFinalBool();
 
+  if (this.esLaFechaFinalElUltimoDato === true) {
+      this.calcularDiasParaCuentaCorriente();
+      this.calcularSaldosParaCuentaCorriente();
+  } else {
+      this.indiceFechaFinalNumerico();
+      this.calcularDiasParaCuentaCorriente2();
+      console.log(this.indiceFechaFinal);
+  }
 }
 
 /*Calcular Dias Para Cuenta Corriente */
@@ -93,7 +109,7 @@ calcularDiasParaCuentaCorriente = () => {
   let cuentaParaTrabajo = this.ctaCte.slice();
   let cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {
       /* Calculo los dias para los items de las la Cta Cte desde el 2do ITEM hasta el ultimo */
-      if( index < array.length - 1) {
+      if ( index < array.length - 1) {
           itemCuenta.dias = this.calcularCantidadDias(itemCuenta.FECHA, array[index + 1].FECHA);
       }
   });
@@ -101,14 +117,13 @@ calcularDiasParaCuentaCorriente = () => {
 }
 
 
+
 /* Calcular Intereses */
 /* Saldo anterior * Dias * Tasa Diaria Efectiva */
 calcularInteresParaCuentaCorriente = () => {
   let cuentaParaTrabajo = this.ctaCte.slice();
-  let cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {
-    
-        itemCuenta.intereses = this.calcularFormularInteres(array[index - 1].SALDO, itemCuenta.dias);
-    
+  let cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {    
+        itemCuenta.intereses = this.calcularFormularInteres(array[index - 1].SALDO, itemCuenta.dias);    
 });
   return cuentaDevuelta;
 }
@@ -132,6 +147,40 @@ calcularSaldosParaCuentaCorriente = () => {
 });
   return cuentaDevuelta;
 }
+
+/*Calcular Dias Para Cuenta Corriente cuando la fecha de fin de remision no es el utlimo dato */
+calcularDiasParaCuentaCorriente2 = () => {
+  let cuentaParaTrabajo = this.ctaCte.slice();
+  let cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {
+    if ( index < array.length) {
+      if ( index < this.indiceFechaFinal) {
+          itemCuenta.dias = this.calcularCantidadDias(itemCuenta.FECHA, array[index + 1].FECHA);
+      } else {
+        itemCuenta.dias = 0;
+        itemCuenta.intereses = 0;
+      }
+    }
+  });
+  return cuentaDevuelta;
+}
+
+
+/* Calcular los Saldos */
+/* Calculo Nuevo SALDO = S - 1 +D -C + I */
+calcularSaldosParaCuentaCorriente2 = () => {
+  let cuentaParaTrabajo = this.ctaCte.slice();
+  let indiceDeFechaFinal = cuentaParaTrabajo.findIndex(cuentaParaTrabajo => cuentaParaTrabajo.REFERENCIA == 'Fecha Final');
+  
+  
+
+
+
+ 
+  
+  console.log(indiceDeFechaFinal);
+  //return cuentaParaTrabajo;
+}
+
 
 
 /* Funcion para calcular cantidad de dias entre dos fechas */
