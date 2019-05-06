@@ -100,6 +100,7 @@ calculoAlgoritmo1 = () => {
   } else {
       this.indiceFechaFinalNumerico();
       this.calcularDiasParaCuentaCorriente2();
+      this.calcularSaldosParaCuentaCorriente2();
       console.log(this.indiceFechaFinal);
   }
 }
@@ -148,6 +149,37 @@ calcularSaldosParaCuentaCorriente = () => {
   return cuentaDevuelta;
 }
 
+/* Calcular los Saldos */
+/* Calculo Nuevo SALDO = S - 1 +D -C + I */
+calcularSaldosParaCuentaCorriente2 = () => {
+  let cuentaParaTrabajo = this.ctaCte.slice();
+  let indiceDeFechaFinal = cuentaParaTrabajo.findIndex(cuentaParaTrabajo => cuentaParaTrabajo.REFERENCIA == 'Fecha Final');
+  
+  let cuentaDevuelta = cuentaParaTrabajo.map( (itemCuenta, index, array) => {
+      if (index === 0) {
+        itemCuenta.SALDO = itemCuenta.DEBITO;
+        itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
+      } else if (index === array.length - 1) { // ultimo caso
+        itemCuenta.SALDO = array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO + array[index - 1].intereses;
+        this.saldoFinal = itemCuenta.SALDO;
+      } else if (index === indiceDeFechaFinal) { // igual a fecha final
+          itemCuenta.SALDO = array[index - 1].SALDO + array[index - 1].intereses;
+          itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
+      } else if (index < indiceDeFechaFinal) { //menor a fecha final
+        itemCuenta.SALDO = array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO + array[index - 1].intereses;
+        itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
+      } else if (index > indiceDeFechaFinal) {
+        itemCuenta.SALDO = array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO;
+        itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
+      }
+
+  });
+
+
+
+  return cuentaDevuelta;
+}
+
 /*Calcular Dias Para Cuenta Corriente cuando la fecha de fin de remision no es el utlimo dato */
 calcularDiasParaCuentaCorriente2 = () => {
   let cuentaParaTrabajo = this.ctaCte.slice();
@@ -165,21 +197,7 @@ calcularDiasParaCuentaCorriente2 = () => {
 }
 
 
-/* Calcular los Saldos */
-/* Calculo Nuevo SALDO = S - 1 +D -C + I */
-calcularSaldosParaCuentaCorriente2 = () => {
-  let cuentaParaTrabajo = this.ctaCte.slice();
-  let indiceDeFechaFinal = cuentaParaTrabajo.findIndex(cuentaParaTrabajo => cuentaParaTrabajo.REFERENCIA == 'Fecha Final');
-  
-  
 
-
-
- 
-  
-  console.log(indiceDeFechaFinal);
-  //return cuentaParaTrabajo;
-}
 
 
 
