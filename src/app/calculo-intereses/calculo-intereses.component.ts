@@ -13,6 +13,8 @@ export class CalculoInteresesComponent implements OnInit {
 
 ctaCte: ItemCtaCte[] = datosCtaCte;
 fechaFinRemision: Date = new Date();
+fechaSolicitud: any = '';
+lecheRemitidaHasta: any = '';
 tasaDiariaEfectiva: number =  0.000133681;
 saldoFinal: number;
 esLaFechaFinalElUltimoDato = true;
@@ -58,7 +60,7 @@ ordenarPorFecha = () => {
 }
 
 eliminarReferenciasInteresGenerado = () => {
-  for( let i = 0; i < this.ctaCte.length; i++) {
+  for ( let i = 0; i < this.ctaCte.length; i++) {
     if ( this.ctaCte[i].IdRegistro_2 === 4) {
       this.ctaCte.splice(i, 1);
     }
@@ -82,6 +84,9 @@ indiceFechaFinalBool = () => {
   }
 }
 
+redondear = (numero) => {
+  return Math.round(numero);
+}
 
 /* Caluculo Algoritmo 1
 /////////////////////////////////////////
@@ -100,6 +105,7 @@ calculoAlgoritmo1 = () => {
   } else {
       this.indiceFechaFinalNumerico();
       this.calcularDiasParaCuentaCorriente2();
+      this.calcularSaldosParaCuentaCorrienteFechaMovil();
       console.log(this.indiceFechaFinal);
   }
 }
@@ -135,16 +141,52 @@ calcularSaldosParaCuentaCorriente = () => {
   let cuentaParaTrabajo = this.ctaCte.slice();
   let cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {
       if ( index === 0) {
-        itemCuenta.SALDO = itemCuenta.DEBITO;
+        itemCuenta.SALDO = this.redondear(itemCuenta.DEBITO);
         itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
       } else if ( index === array.length - 1) {
-        itemCuenta.SALDO = array[index - 1].SALDO + array[index - 1].intereses;
+        itemCuenta.SALDO = this.redondear(array[index - 1].SALDO + array[index - 1].intereses);
         this.saldoFinal = itemCuenta.SALDO;
       } else {
-        itemCuenta.SALDO = array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO + array[index - 1].intereses;
+        itemCuenta.SALDO = this.redondear(array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO + array[index - 1].intereses);
         itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
       }
+      
+
 });
+  return cuentaDevuelta;
+}
+
+/* Calcular los Saldos Fecha Movil:
+Realiza el calculo de Saldos teniendo en cuenta que la Fecha Final o
+Fecha de fin de remisión no es el último registro de los datos recibidos.
+*/
+calcularSaldosParaCuentaCorrienteFechaMovil = () => {
+  const cuentaParaTrabajo = this.ctaCte.slice();
+  const indiceDeFechaFinal = cuentaParaTrabajo.findIndex(cuentaParaTrabajo => cuentaParaTrabajo.REFERENCIA == 'Fecha Final');
+  /* Mapea el array de datos realizando los calculos */
+  const cuentaDevuelta = cuentaParaTrabajo.map( (itemCuenta, index, array) => {
+      if (index === 0) {
+        itemCuenta.SALDO = this.redondear(itemCuenta.DEBITO);
+        itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
+      } else if (index === array.length - 1) { // ultimo caso EL SALDO FINAL.
+        itemCuenta.SALDO = this.redondear(array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO + array[index - 1].intereses);
+        this.saldoFinal = itemCuenta.SALDO;
+      } else if (index === indiceDeFechaFinal) { // igual a fecha final, último caso en el que se tiene en cuenta los intereses.
+          itemCuenta.SALDO = this.redondear(array[index - 1].SALDO + array[index - 1].intereses);
+          itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
+      } else if (index < indiceDeFechaFinal) { // menor a fecha final, se realiza el calculo teniendo en cuenta los intereses
+        itemCuenta.SALDO = this.redondear(array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO + array[index - 1].intereses);
+        itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
+      } else if (index > indiceDeFechaFinal) {
+        // mayor a fecha final, se realiza las restas de prestación pecuniaria sin tener en cuenta los intereses
+        itemCuenta.SALDO = this.redondear(array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO);
+        itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
+      }
+
+  });
+
+
+
   return cuentaDevuelta;
 }
 
@@ -165,21 +207,7 @@ calcularDiasParaCuentaCorriente2 = () => {
 }
 
 
-/* Calcular los Saldos */
-/* Calculo Nuevo SALDO = S - 1 +D -C + I */
-calcularSaldosParaCuentaCorriente2 = () => {
-  let cuentaParaTrabajo = this.ctaCte.slice();
-  let indiceDeFechaFinal = cuentaParaTrabajo.findIndex(cuentaParaTrabajo => cuentaParaTrabajo.REFERENCIA == 'Fecha Final');
-  
-  
 
-
-
- 
-  
-  console.log(indiceDeFechaFinal);
-  //return cuentaParaTrabajo;
-}
 
 
 
@@ -197,7 +225,7 @@ calcularCantidadDias = (fechaMenor, fechaMayor) => {
 }
 
 calcularFormularInteres = (saldoAnterior, dias) => {
-   return  saldoAnterior * dias * this.tasaDiariaEfectiva;
+   return  this.redondear(saldoAnterior * dias * this.tasaDiariaEfectiva);
 }
 
 
