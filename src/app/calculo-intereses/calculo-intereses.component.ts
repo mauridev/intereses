@@ -13,8 +13,8 @@ export class CalculoInteresesComponent implements OnInit {
 
 ctaCte: ItemCtaCte[] = datosCtaCte;
 fechaFinRemision: Date = new Date();
-fechaSolicitud: any = 'Fecha Solicitud';
-lecheRemitidaHasta: any = 'Leche remitida hasta';
+fechaSolicitud: any = '';
+lecheRemitidaHasta: any = '';
 tasaDiariaEfectiva: number =  0.000133681;
 saldoFinal: number;
 esLaFechaFinalElUltimoDato = true;
