@@ -36,7 +36,7 @@
       <!--<div class="col-md-1 bg-light">{{ itemCtaCte.IdRegistro_2 }}</div>-->
       <div class="col-md-2 bg-light">{{ itemCtaCte.DEBITO }}</div>
       <div class="col-md-2 bg-light">{{ itemCtaCte.CREDITO }}</div>
-      <div class="col-md-1 bg-light">{{ itemCtaCte.SALDO | number:digitsInfo }}</div>
+      <div class="col-md-1 bg-light">{{ itemCtaCte.SALDO | number:'1.0-0' }}</div>
       <div class="col-md-1"></div>
       <div class="col-md-1"></div>
       <div class="col-md-1"></div>
@@ -61,12 +61,17 @@
       <div class="col-md-12">
         <h3>Para copiar y pegar en Whatapp o Email</h3>
       </div>
-    </div>
+  </div>
   <div class="row">
     <div class="col-md-12">
-      El monto adeudado es de USD {{ saldoFinal }}.  El saldo incluye intereses calculados al día {{ fechaSolicitud }}, fecha de solicitud de la información, 
-      y se restaron los pagos de prestación pecuniaria realizados por la leche remitida hasta el 31/02/2019, última remisión informada 
+      El monto adeudado es de USD <strong> {{ saldoFinal }} </strong>.  El saldo incluye intereses calculados al día <strong> {{ fechaSolicitud }} </strong>, fecha de solicitud de la información, 
+      y se restaron los pagos de prestación pecuniaria realizados por la leche remitida hasta el <strong> {{ lecheRemitidaHasta }} </strong>, última remisión informada 
       por la industria.
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-12">
+      <hr>  
+    </div>
+</div>
 </div>
