@@ -1,17 +1,28 @@
 <div class="container alert-info">
   <div class="row">
-    <div class="col-md-6">Fecha Fin Remisión
+    <div class="col-md-4">
+      Seleccione el archivo de Cuenta Corriente en formato JSON:
+    </div>
+    <div class="col-md-8">
+        <input id="file-upload" 
+          type="file" 
+          accept=".json" 
+          (change)="fileUpload($event)">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">Fecha Final para Cálculo
         <input [(ngModel)]="fechaFinRemision"  type="text" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)"/>
         <button (click)="d.toggle()">Calendario</button>
     </div>  
   </div>
   <div class="row">
-      <div class="col-md-3">Fecha de la solicitud
-          <input [(ngModel)]="fechaSolicitud"  type="text" placeholder="Solicitud"/>
-      </div>
-      <div class="col-md-3">Leche Remitida Hasta
-          <input [(ngModel)]="lecheRemitidaHasta"  type="text" placeholder="Remision Hasta"/>
-      </div>
+   
       <div class="col-md-6">
         <h2>El saldo del productor es de: <span class="badge badge-info">{{ saldoFinal }}</span></h2>
       </div>
@@ -82,6 +93,12 @@
       </div>
   </div>
   <div class="row">
+      <div class="col-md-6">Fecha de la solicitud
+          <input [(ngModel)]="fechaSolicitud"  type="text" placeholder="Solicitud"/>
+      </div>
+      <div class="col-md-6">Leche Remitida Hasta
+          <input [(ngModel)]="lecheRemitidaHasta"  type="text" placeholder="Remision Hasta"/>
+      </div>
     <div class="col-md-12">
       El monto adeudado es de USD <strong> {{ saldoFinal }} </strong>.  El saldo incluye intereses calculados al día <strong> {{ fechaSolicitud }} </strong>, fecha de solicitud de la información, 
       y se restaron los pagos de prestación pecuniaria realizados por la leche remitida hasta el <strong> {{ lecheRemitidaHasta }} </strong>, última remisión informada 
