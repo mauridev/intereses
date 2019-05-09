@@ -1,8 +1,9 @@
 import { ItemCtaCte} from './../classes/item-cta-cte';
 import { Component, OnInit } from '@angular/core';
-
 import datosCtaCte from '../../assets/data/ctacte.json';
+
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-calculo-intereses',
@@ -11,7 +12,9 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CalculoInteresesComponent implements OnInit {
 
-ctaCte: ItemCtaCte[] = datosCtaCte;
+
+fileText: any = '[{}]';
+ctaCte: ItemCtaCte[] = JSON.parse(this.fileText);
 fechaFinRemision: Date = new Date();
 fechaSolicitud: any = '';
 lecheRemitidaHasta: any = '';
@@ -20,12 +23,32 @@ saldoFinal: number;
 esLaFechaFinalElUltimoDato = true;
 indiceFechaFinal: number;
 
+
+
+
+
+
 constructor() {
 }
 
 
 ngOnInit() {
-  this.calculoAlgoritmo1();
+  //this.calculoAlgoritmo1();
+  console.log(this);
+}
+
+alerta = () =>{
+  alert(this);
+}
+
+fileUpload(event) {
+  let reader = new FileReader();
+  reader.readAsText(event.srcElement.files[0]);
+  let me = this;
+  reader.onload = () => {
+    me.fileText = reader.result;
+    me.ctaCte = JSON.parse(me.fileText);
+  }
 }
 
 /* Obtiene la fecha elegida del data picker */
