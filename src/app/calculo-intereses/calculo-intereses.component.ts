@@ -1,9 +1,8 @@
 import { ItemCtaCte} from './../classes/item-cta-cte';
 import { Component, OnInit } from '@angular/core';
-import datosCtaCte from '../../assets/data/ctacte.json';
 
+/* Importo NG Bootstrap para el manejo del calendario */
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-
 
 @Component({
   selector: 'app-calculo-intereses',
@@ -23,51 +22,45 @@ saldoFinal: number;
 esLaFechaFinalElUltimoDato = true;
 indiceFechaFinal: number;
 
-
-
-
-
-
 constructor() {
 }
 
 
 ngOnInit() {
-  //this.calculoAlgoritmo1();
-  console.log(this);
 }
 
-alerta = () =>{
-  alert(this);
-}
-
+/* Recibe el evento con el archivo JSON que se está leyendo.
+y registra la información en la propiedad fileText */
 fileUpload(event) {
-  let reader = new FileReader();
+  const reader = new FileReader();
   reader.readAsText(event.srcElement.files[0]);
-  let me = this;
+  const me = this;
   reader.onload = () => {
     me.fileText = reader.result;
     me.ctaCte = JSON.parse(me.fileText);
   }
 }
 
-/* Obtiene la fecha elegida del data picker */
+/* Obtiene la fecha elegida del data picker y llama a la funcion calculoAlgoritmo1
+la cual dispara el calculo de intereses. Ya que pose la info necesaria para realizar el calculo.
+*/
 onDateSelect =  () => {
   this.eliminarReferenciasFechaFinal();
   this.calculoAlgoritmo1();
 }
 
+/* Elimina toda referencia que sea Fecha Final */
 eliminarReferenciasFechaFinal = () => {
   for ( let i = 0; i < this.ctaCte.length; i++) {
     if ( this.ctaCte[i].REFERENCIA === 'Fecha Final') {
       this.ctaCte.splice(i, 1);
-    }
- }
-}
+}}}
 
+/* Setea la referencia Fecha Final con el dato que posea la propiedad Fecha Fin Remision */
 setFechaFinDeRemision = () => {
   const itemFinDeRemision = new ItemCtaCte();
   itemFinDeRemision.FECHA = this.fechaFinRemision;
+  console.log(itemFinDeRemision.FECHA);
   itemFinDeRemision.REFERENCIA = 'Fecha Final';
   itemFinDeRemision.id = '000000';
   this.ctaCte.push(itemFinDeRemision);
@@ -129,7 +122,6 @@ calculoAlgoritmo1 = () => {
       this.indiceFechaFinalNumerico();
       this.calcularDiasParaCuentaCorriente2();
       this.calcularSaldosParaCuentaCorrienteFechaMovil();
-      console.log(this.indiceFechaFinal);
   }
 }
 
@@ -231,24 +223,25 @@ calcularDiasParaCuentaCorriente2 = () => {
 
 
 
-
-
-
 /* Funcion para calcular cantidad de dias entre dos fechas */
 calcularCantidadDias = (fechaMenor, fechaMayor) => {
+
+
   fechaMenor = new Date(fechaMenor).getTime();
   fechaMayor = new Date(fechaMayor).getTime();
-
+ 
   let dia_en_milisegundos = 86400000;
   let diff_en_milisegundos = fechaMayor - fechaMenor;
   let diff_en_dias = diff_en_milisegundos / dia_en_milisegundos;
 
-
-  return Math.round(diff_en_dias);
+  console.log(diff_en_dias);
+  console.log(Math.round(diff_en_dias));
+  return Math.floor( diff_en_dias);
 }
 
 calcularFormularInteres = (saldoAnterior, dias) => {
-   return  this.redondear(saldoAnterior * dias * this.tasaDiariaEfectiva);
+   //return  this.redondear(saldoAnterior * dias * this.tasaDiariaEfectiva);
+   return  saldoAnterior * dias * this.tasaDiariaEfectiva;
 }
 
 

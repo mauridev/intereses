@@ -42,7 +42,7 @@
                 FECHA
               </strong>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                   <strong>Referencia</strong>
               </div>
               <!--<div class="col-md-1">Ref ID</div>-->
@@ -55,14 +55,14 @@
               <div class="col-md-1">
                   <strong>Saldo</strong>
               </div>
-             <!-- <div class="col-md-1">DIAS</div> -->
+              <div class="col-md-1">DIAS</div>
               <div class="col-md-1">
                   <strong>INTERES</strong>
               </div>
   </div>
   <div class="row" *ngFor="let itemCtaCte of ctaCte">    
       <div class="col-md-2 bg-light">{{ itemCtaCte.FECHA | date:'dd-MM-yyyy' }}</div>
-      <div class="col-md-4 bg-light">{{ itemCtaCte.REFERENCIA }}</div>
+      <div class="col-md-3 bg-light">{{ itemCtaCte.REFERENCIA }}</div>
       <!--<div class="col-md-1 bg-light">{{ itemCtaCte.IdRegistro_2 }}</div>-->
       <div class="col-md-2 bg-light">{{ itemCtaCte.DEBITO }}</div>
       <div class="col-md-2 bg-light">{{ itemCtaCte.CREDITO }}</div>
@@ -76,7 +76,7 @@
       <div class="col-md-2"></div>
       <div class="col-md-2"></div>
       <div class="col-md-1"></div>
-      <!-- <div class="col-md-1 bg-danger">{{ itemCtaCte.dias }}</div>-->
+      <div class="col-md-1 bg-danger">{{ itemCtaCte.dias }}</div>
       <div class="col-md-1 bg-success">{{ itemCtaCte.intereses }}</div>
   </div>
 </div>
