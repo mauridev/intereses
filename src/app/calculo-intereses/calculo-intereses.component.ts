@@ -240,8 +240,8 @@ calcularCantidadDias = (fechaMenor, fechaMayor) => {
 }
 
 calcularFormularInteres = (saldoAnterior, dias) => {
-   //return  this.redondear(saldoAnterior * dias * this.tasaDiariaEfectiva);
-   return  saldoAnterior * dias * this.tasaDiariaEfectiva;
+   return  this.redondear(saldoAnterior * dias * this.tasaDiariaEfectiva);
+   //return  saldoAnterior * dias * this.tasaDiariaEfectiva;
 }
 
 
