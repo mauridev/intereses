@@ -1,5 +1,7 @@
+import { ExcelService } from './../services/excel.service';
 import { ItemCtaCte} from './../classes/item-cta-cte';
 import { Component, OnInit} from '@angular/core';
+
 
 /* Importo NG Bootstrap para el manejo del calendario */
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
@@ -12,7 +14,19 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CalculoInteresesComponent implements OnInit {
 
- 
+  data: any = [{
+    eid: 'e101',
+    ename: 'ravi',
+    esal: 1000
+    },{
+    eid: 'e102',
+    ename: 'ram',
+    esal: 2000
+    },{
+    eid: 'e103',
+    ename: 'rajesh',
+    esal: 3000
+    }];
 
 fileText: any = '[{}]';
 ctaCte: ItemCtaCte[] = JSON.parse(this.fileText);
@@ -27,11 +41,16 @@ alertaMensaje = '';
 alertaTipo = 'danger';
 alerta = false;
 
-constructor() {
+constructor(private excelService: ExcelService) {
 }
 
 
 ngOnInit() {
+}
+
+exportAsXLSX(): void {
+  //this.ctaCte.
+  this.excelService.exportAsExcelFile(this.ctaCte, 'ctaCte');
 }
 
 close = () => {
