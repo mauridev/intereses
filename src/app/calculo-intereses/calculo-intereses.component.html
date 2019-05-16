@@ -1,4 +1,8 @@
+<div class="container">
+    
+</div>
 <div class="container alert-info">
+    
   <div class="row">
     <div class="col-md-4">
       Seleccione el archivo de Cuenta Corriente en formato JSON:
@@ -10,6 +14,7 @@
           (change)="fileUpload($event)">
     </div>
   </div>
+  
   <div class="row">
     <div class="col-md-12">
         <hr>
@@ -17,10 +22,16 @@
   </div>
   <div class="row">
     <div class="col-md-6">Fecha Final para Cálculo
-        <input [(ngModel)]="fechaFinRemision"  type="text" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)"/>
+        <input  [(ngModel)]="fechaFinRemision"  type="text" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)"/>
         <button (click)="d.toggle()">Calendario</button>
-    </div>  
+    </div>
+    <div class="col-md-6" *ngIf="alerta == true">
+        <ngb-alert [type]="alertaTipo"  [dismissible]="true" (close)="close()" >
+          {{ alertaMensaje }}
+        </ngb-alert>
+    </div>   
   </div>
+ 
   <div class="row">
    
       <div class="col-md-6">

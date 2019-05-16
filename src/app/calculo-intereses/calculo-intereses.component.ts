@@ -1,8 +1,9 @@
 import { ItemCtaCte} from './../classes/item-cta-cte';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 
 /* Importo NG Bootstrap para el manejo del calendario */
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-calculo-intereses',
@@ -11,6 +12,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CalculoInteresesComponent implements OnInit {
 
+ 
 
 fileText: any = '[{}]';
 ctaCte: ItemCtaCte[] = JSON.parse(this.fileText);
@@ -21,6 +23,9 @@ tasaDiariaEfectiva: number =  0.000133681;
 saldoFinal: number;
 esLaFechaFinalElUltimoDato = true;
 indiceFechaFinal: number;
+alertaMensaje = '';
+alertaTipo = 'danger';
+alerta = false;
 
 constructor() {
 }
@@ -29,6 +34,9 @@ constructor() {
 ngOnInit() {
 }
 
+close = () => {
+  this.alerta = false;
+}
 /* Recibe el evento con el archivo JSON que se está leyendo.
 y registra la información en la propiedad fileText */
 fileUpload(event) {
@@ -38,16 +46,30 @@ fileUpload(event) {
   reader.onload = () => {
     me.fileText = reader.result;
     me.ctaCte = JSON.parse(me.fileText);
-  }
+  };
 }
 
 /* Obtiene la fecha elegida del data picker y llama a la funcion calculoAlgoritmo1
 la cual dispara el calculo de intereses. Ya que pose la info necesaria para realizar el calculo.
 */
 onDateSelect =  () => {
-  this.eliminarReferenciasFechaFinal();
-  this.calculoAlgoritmo1();
+  if (this.ctaCte.length <= 1 ) {
+    this.alertaTipo = 'danger';
+    this.alertaMensaje = 'Seleccione un archivo de Cuenta Corriente en formato .JSON';
+    this.alerta = true;
+  } else {
+    this.eliminarReferenciasFechaFinal();
+    this.calculoAlgoritmo1();
+  }
 }
+
+
+
+/* Caluculo Algoritmo 1
+/////////////////////////////////////////
+*/
+/* Recibe el array de CtaCte y crea un array nuevo con los que pertenecen a los estados 12 y 13
+ */
 
 /* Elimina toda referencia que sea Fecha Final */
 eliminarReferenciasFechaFinal = () => {
@@ -60,7 +82,6 @@ eliminarReferenciasFechaFinal = () => {
 setFechaFinDeRemision = () => {
   const itemFinDeRemision = new ItemCtaCte();
   itemFinDeRemision.FECHA = this.fechaFinRemision;
-  console.log(itemFinDeRemision.FECHA);
   itemFinDeRemision.REFERENCIA = 'Fecha Final';
   itemFinDeRemision.id = '000000';
   this.ctaCte.push(itemFinDeRemision);
@@ -103,13 +124,6 @@ indiceFechaFinalBool = () => {
 redondear = (numero) => {
   return Math.round(numero);
 }
-
-/* Caluculo Algoritmo 1
-/////////////////////////////////////////
-*/
-/* Recibe el array de CtaCte y crea un array nuevo con los que pertenecen a los estados 12 y 13
- */
-
 
 calculoAlgoritmo1 = () => {
   this.setFechaFinDeRemision();
@@ -165,8 +179,6 @@ calcularSaldosParaCuentaCorriente = () => {
         itemCuenta.SALDO = this.redondear(array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO + array[index - 1].intereses);
         itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
       }
-      
-
 });
   return cuentaDevuelta;
 }
@@ -199,16 +211,13 @@ calcularSaldosParaCuentaCorrienteFechaMovil = () => {
       }
 
   });
-
-
-
   return cuentaDevuelta;
 }
 
 /*Calcular Dias Para Cuenta Corriente cuando la fecha de fin de remision no es el utlimo dato */
 calcularDiasParaCuentaCorriente2 = () => {
-  let cuentaParaTrabajo = this.ctaCte.slice();
-  let cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {
+  const cuentaParaTrabajo = this.ctaCte.slice();
+  const cuentaDevuelta = cuentaParaTrabajo.map((itemCuenta, index, array) => {
     if ( index < array.length) {
       if ( index < this.indiceFechaFinal) {
           itemCuenta.dias = this.calcularCantidadDias(itemCuenta.FECHA, array[index + 1].FECHA);
@@ -225,23 +234,16 @@ calcularDiasParaCuentaCorriente2 = () => {
 
 /* Funcion para calcular cantidad de dias entre dos fechas */
 calcularCantidadDias = (fechaMenor, fechaMayor) => {
-
-
   fechaMenor = new Date(fechaMenor).getTime();
   fechaMayor = new Date(fechaMayor).getTime();
- 
-  let dia_en_milisegundos = 86400000;
-  let diff_en_milisegundos = fechaMayor - fechaMenor;
-  let diff_en_dias = diff_en_milisegundos / dia_en_milisegundos;
-
-  console.log(diff_en_dias);
-  console.log(Math.round(diff_en_dias));
-  return Math.floor( diff_en_dias);
+  const diaEnMilisegundos = 86400000;
+  const diferenciaEnMilisegundos = fechaMayor - fechaMenor;
+  const diferenciaEnDias = diferenciaEnMilisegundos / diaEnMilisegundos;
+  return Math.floor( diferenciaEnDias);
 }
 
 calcularFormularInteres = (saldoAnterior, dias) => {
    return  this.redondear(saldoAnterior * dias * this.tasaDiariaEfectiva);
-   //return  saldoAnterior * dias * this.tasaDiariaEfectiva;
 }
 
 
