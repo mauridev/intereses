@@ -193,7 +193,10 @@ calcularSaldosParaCuentaCorriente = () => {
         itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
       } else if ( index === array.length - 1) {
         itemCuenta.SALDO = this.redondear(array[index - 1].SALDO + array[index - 1].intereses);
+        console.log(this.saldoFinal);
+        
         this.saldoFinal = itemCuenta.SALDO;
+        console.log(this.saldoFinal);
       } else {
         itemCuenta.SALDO = this.redondear(array[index - 1].SALDO + itemCuenta.DEBITO - itemCuenta.CREDITO + array[index - 1].intereses);
         itemCuenta.intereses = this.calcularFormularInteres(itemCuenta.SALDO, itemCuenta.dias);
