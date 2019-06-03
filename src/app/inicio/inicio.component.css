@@ -4,3 +4,9 @@
     margin-right: auto;
     width: 25%;
   }
+.alinear-texto {
+  text-align: center;
+}
+.verde-fondo {
+  color: #8CD600;
+}

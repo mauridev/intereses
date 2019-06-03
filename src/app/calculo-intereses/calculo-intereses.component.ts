@@ -40,12 +40,17 @@ indiceFechaFinal: number;
 alertaMensaje = '';
 alertaTipo = 'danger';
 alerta = false;
+verDias = false;
 
 constructor(private excelService: ExcelService) {
 }
 
 
 ngOnInit() {
+}
+
+verDiasEnCalculo = () => {
+  this.verDias = !this.verDias;
 }
 
 exportAsXLSX(): void {

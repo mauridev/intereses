@@ -2,9 +2,20 @@
   <div class="row">
     <div class="col-md-12">
         <div class="jumbotron">
-            <h1 class="display-4" *ngIf="saldoFinal !== undefined">El saldo del productor es de: <span class="badge badge-info">{{ saldoFinal }}</span></h1>
+            <div class="col-md-12"><h1 class="display-4" *ngIf="saldoFinal !== undefined">El saldo del productor es de: <span class="badge badge-info">{{ saldoFinal }}</span></h1></div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <button *ngIf="saldoFinal !== undefined" class="btn btn-success" (click)="exportAsXLSX()">DESCARGAR EXCEL</button>
+              </div>
+            </div>            
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <button *ngIf="saldoFinal !== undefined" class="btn btn-warning" (click)="verDiasEnCalculo()">VER DIAS</button>
+              </div>
+            </div>
             
-            <button *ngIf="saldoFinal !== undefined" class="btn btn-success" (click)="exportAsXLSX()">DESCARGAR EXCEL</button>
+            
 
             <hr class="my-4">
             
@@ -37,19 +48,6 @@
         </div>
     </div>
   </div>
-    
-  <!--<div class="row">
-    <div class="col-md-4">
-      Seleccione el archivo de Cuenta Corriente en formato JSON:
-    </div>
-    <div class="col-md-8">
-        <input id="file-upload" 
-          type="file" 
-          accept=".json" 
-          (change)="fileUpload($event)">
-    </div>
-  </div>
-  -->
   <div class="row">
     <div class="col-md-12">
         <hr>
@@ -91,7 +89,7 @@
               <div class="col-md-1">
                   <strong>Saldo</strong>
               </div>
-              <div class="col-md-1">DIAS</div>
+              <div class="col-md-1" *ngIf="verDias">DIAS</div>
               <div class="col-md-1">
                   <strong>INTERES</strong>
               </div>
@@ -112,7 +110,7 @@
       <div class="col-md-2"></div>
       <div class="col-md-2"></div>
       <div class="col-md-1"></div>
-      <div class="col-md-1 bg-danger">{{ itemCtaCte.dias }}</div>
+      <div class="col-md-1 bg-danger" *ngIf="verDias">{{ itemCtaCte.dias }}</div>
       <div class="col-md-1 bg-success">{{ itemCtaCte.intereses }}</div>
   </div>
 </div>
