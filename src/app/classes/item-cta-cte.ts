@@ -8,5 +8,6 @@ export class ItemCtaCte {
     SALDO: number;
     dias: number;
     intereses: number;
+    OBLIGACION_REAL_PF: number;
 }
 

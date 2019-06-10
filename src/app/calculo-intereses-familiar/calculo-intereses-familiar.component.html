@@ -1,3 +1,142 @@
-<h4>
-  Trabajando para usted...
-</h4>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Compromiso Real</h5>
+              <p class="card-text">{{ compromisoReal }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Coeficiente Adelanto</h5>
+              <p class="card-text">{{ coeficienteAdelanto }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Coeficiente Saldo</h5>
+                <p class="card-text">{{ coeficienteSaldo }}</p>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Litros</h5>
+                <p class="card-text"> {{ litrosBeneficio }}</p>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Obligacion Total USD</h5>
+              <p class="card-text">{{ obligacionRealTotal }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Obligacion Adelanto USD</h5>
+              <p class="card-text"> {{ obligacionAdelanto }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Obligacion Saldo USD</h5>
+                <p class="card-text">{{ obligacionSaldo }}</p>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">?</h5>
+                <p class="card-text">?</p>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+<hr>
+  <div class="container">  
+    <div class="row">
+        <div class="col-md-4">
+          Seleccione el archivo de Cuenta Corriente en formato JSON:
+        </div>
+        <div class="col-md-8">
+            <input id="file-upload" 
+              type="file" 
+              accept=".json" 
+              (change)="fileUpload($event)">
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6">Fecha Final para Cálculo
+              <input  [(ngModel)]="fechaFinRemision"  type="text" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)"/>
+              <button (click)="d.toggle()">Calendario</button>
+          </div>
+          <div class="col-md-6" *ngIf="alerta == true">
+              <ngb-alert [type]="alertaTipo"  [dismissible]="true" (close)="close()" >
+                {{ alertaMensaje }}
+              </ngb-alert>
+          </div>   
+        </div>
+</div>
+<div class="container">
+  
+    <div class="row" rowStyle>                  
+                <div class="col-md-2">
+                <strong>
+                  FECHA
+                </strong>
+                </div>
+                <div class="col-md-3">
+                    <strong>Referencia</strong>
+                </div>
+                <!--<div class="col-md-1">Ref ID</div>-->
+                <div class="col-md-2">
+                    <strong>Debito</strong>
+                </div>
+                <div class="col-md-2">
+                    <strong>Credito</strong>
+                </div>
+                <div class="col-md-1">
+                    <strong>Saldo</strong>
+                </div>
+                <div class="col-md-1" *ngIf="verDias">DIAS</div>
+                <div class="col-md-1">
+                    <strong>INTERES</strong>
+                </div>
+    </div>
+    <div class="row" *ngFor="let itemCtaCte of ctaCte">    
+        <div class="col-md-2 bg-light">{{ itemCtaCte.FECHA | date:'dd-MM-yyyy' }}</div>
+        <div class="col-md-3 bg-light">{{ itemCtaCte.REFERENCIA }}</div>
+        <!--<div class="col-md-1 bg-light">{{ itemCtaCte.IdRegistro_2 }}</div>-->
+        <div class="col-md-2 bg-light">{{ itemCtaCte.DEBITO }}</div>
+        <div class="col-md-2 bg-light">{{ itemCtaCte.CREDITO }}</div>
+        <div class="col-md-1 bg-light">{{ itemCtaCte.SALDO | number:'1.0-0' }}</div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1 bg-danger" *ngIf="verDias">{{ itemCtaCte.dias }}</div>
+        <div class="col-md-1 bg-success">{{ itemCtaCte.intereses }}</div>
+    </div>
+  </div>
