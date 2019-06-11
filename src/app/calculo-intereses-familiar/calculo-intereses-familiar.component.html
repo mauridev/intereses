@@ -62,8 +62,8 @@
         <div class="col-sm-3">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">?</h5>
-                <p class="card-text">?</p>
+                <h5 class="card-title">Saldo Compromiso Real</h5>
+                <p class="card-text">{{ saldoFinal }}</p>
               </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-2"></div>
         <div class="col-md-1"></div>
-        <div class="col-md-1 bg-danger" *ngIf="verDias">{{ itemCtaCte.dias }}</div>
+        <div class="col-md-1 bg-danger">{{ itemCtaCte.dias }}</div>
         <div class="col-md-1 bg-success">{{ itemCtaCte.intereses }}</div>
     </div>
   </div>
