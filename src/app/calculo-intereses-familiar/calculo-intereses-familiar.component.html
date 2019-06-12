@@ -60,12 +60,28 @@
             </div>
         </div>
         <div class="col-sm-3">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Saldo Compromiso Real</h5>
-                <p class="card-text">{{ saldoFinal }}</p>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Saldo Compromiso Real</h5>
+                    <p class="card-text">{{ saldoFinal }}</p>
+                  </div>
+                </div>
               </div>
-            </div>
+            </div>  
+            <div class="row">  
+            <div class="col-sm-12">
+              <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Saldo Subsidio</h5>
+                    <p class="card-text">{{ saldoSubsidio }}</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+            
+
         </div>
     </div>
   </div>
@@ -115,12 +131,60 @@
                 <div class="col-md-1">
                     <strong>Saldo</strong>
                 </div>
-                <div class="col-md-1" *ngIf="verDias">DIAS</div>
+                <div class="col-md-1">DIAS</div>
                 <div class="col-md-1">
                     <strong>INTERES</strong>
                 </div>
     </div>
     <div class="row" *ngFor="let itemCtaCte of ctaCte">    
+        <div class="col-md-2 bg-light">{{ itemCtaCte.FECHA | date:'dd-MM-yyyy' }}</div>
+        <div class="col-md-3 bg-light">{{ itemCtaCte.REFERENCIA }}</div>
+        <!--<div class="col-md-1 bg-light">{{ itemCtaCte.IdRegistro_2 }}</div>-->
+        <div class="col-md-2 bg-light">{{ itemCtaCte.DEBITO }}</div>
+        <div class="col-md-2 bg-light">{{ itemCtaCte.CREDITO }}</div>
+        <div class="col-md-1 bg-light">{{ itemCtaCte.SALDO | number:'1.0-0' }}</div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1 bg-danger">{{ itemCtaCte.dias }}</div>
+        <div class="col-md-1 bg-success">{{ itemCtaCte.intereses }}</div>
+    </div>
+  </div>
+
+  <div class="container">
+  
+    <div class="row" rowStyle>                  
+                <div class="col-md-2">
+                <strong>
+                  FECHA
+                </strong>
+                </div>
+                <div class="col-md-3">
+                    <strong>Referencia</strong>
+                </div>
+                <!--<div class="col-md-1">Ref ID</div>-->
+                <div class="col-md-2">
+                    <strong>Debito</strong>
+                </div>
+                <div class="col-md-2">
+                    <strong>Credito</strong>
+                </div>
+                <div class="col-md-1">
+                    <strong>Saldo</strong>
+                </div>
+               <!-- <div class="col-md-1" *ngIf="verDias">DIAS</div>-->
+                <div class="col-md-1">DIAS</div>
+                <div class="col-md-1">
+                    <strong>INTERES</strong>
+                </div>
+    </div>
+    <div class="row" *ngFor="let itemCtaCte of ctaCteSegundaParte">    
         <div class="col-md-2 bg-light">{{ itemCtaCte.FECHA | date:'dd-MM-yyyy' }}</div>
         <div class="col-md-3 bg-light">{{ itemCtaCte.REFERENCIA }}</div>
         <!--<div class="col-md-1 bg-light">{{ itemCtaCte.IdRegistro_2 }}</div>-->
