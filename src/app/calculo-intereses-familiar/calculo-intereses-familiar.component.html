@@ -86,30 +86,101 @@
     </div>
   </div>
 <hr>
+  <!-- Container de comandos-->
   <div class="container">  
+    
     <div class="row">
-        <div class="col-md-4">
-          Seleccione el archivo de Cuenta Corriente en formato JSON:
-        </div>
-        <div class="col-md-8">
-            <input id="file-upload" 
-              type="file" 
-              accept=".json" 
-              (change)="fileUpload($event)">
+      <div class="col-md-12">
+        <div class="jumbotron">
+            <div class="row">
+              <div class="container-md-12">
+                <h1>Ingreso de información.</h1>
+                
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="custom-control custom-switch">
+                        <input 
+                          type="checkbox" 
+                          class="custom-control-input"
+                          [(ngModel)]="esBeneficioso"
+                          id="idBeneficioso">
+                        <label class="custom-control-label" for="idBeneficioso">
+                          <span  *ngIf="esBeneficioso; else noEsBeneficioso">Utilizar Cálculo <strong>Más</strong> Beneficioso</span></label>
+                        <ng-template #noEsBeneficioso>
+                            Utilizar Cálculo <strong>Menos</strong> Beneficioso
+                        </ng-template>
+                      </div>
+                </div>   
+                <div class="col-md-4 p-3 mb-2 bg-info text-white">
+                  Estado Variables <br>
+                  ES BENEFICIOSO EL CALCULO: {{ esBeneficioso }} <br>
+                  UTILIZA FECHA DE FIN DE REMISIÓN: {{ tieneFechaFinRemision }}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6 form">
+                    <input id="file-upload" 
+                      class="custom-file-input"
+                      type="file" 
+                      accept=".json" 
+                      (change)="fileUpload($event)">
+                      <label class="custom-file-label" for="file-upload">{{ nombreArchivoLeido }}</label>  
+                </div>
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">Fecha Final para Cálculo
+                    <input class="form-control"  [(ngModel)]="fechaFinalCalculo"  type="text" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)"/>
+                    <button (click)="d.toggle()" class="btn btn-secondary">Calendario Fecha Final para Cálculo</button>
+                </div>
+                <div class="col-md-6" *ngIf="alerta == true">
+                    <ngb-alert [type]="alertaTipo"  [dismissible]="true" (close)="close()" >
+                      {{ alertaMensaje }}
+                    </ngb-alert>
+                </div>   
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="custom-control custom-switch">
+                        <input 
+                          type="checkbox" 
+                          class="custom-control-input"
+                          [(ngModel)]="tieneFechaFinRemision"
+                          id="idFechaFinRemision">
+                        <label class="custom-control-label" for="idFechaFinRemision">                          
+                          <div class="col-md-12"   *ngIf="tieneFechaFinRemision; else noTieneFechaFinRemision">Fecha Fin Remision
+                              <input class="form-control"  [(ngModel)]="fechaFinRemision"  type="text" ngbDatepicker #d2="ngbDatepicker" (dateSelect)="onDateSelect($event)"/>
+                              <button (click)="d2.toggle()" class="btn btn-secondary">Calendario Fecha Fin Remsión</button>
+                          </div>
+                        </label>
+                        <ng-template #noTieneFechaFinRemision>
+                            <span>Utiliza Fecha Fin Remisión?</span>
+                        </ng-template>
+                      </div>
+                </div>   
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-4">
+                  <button class="btn btn-success btn-lg" (click)="realizarCalculoPF()">{{textoBoton}}</button>
+              </div>
+              <div class="col-md-8">
+                  {{ dibujo }}
+              </div>
+            </div>
         </div>
       </div>
-      <div class="row">
-          <div class="col-md-6">Fecha Final para Cálculo
-              <input  [(ngModel)]="fechaFinRemision"  type="text" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)"/>
-              <button (click)="d.toggle()">Calendario</button>
-          </div>
-          <div class="col-md-6" *ngIf="alerta == true">
-              <ngb-alert [type]="alertaTipo"  [dismissible]="true" (close)="close()" >
-                {{ alertaMensaje }}
-              </ngb-alert>
-          </div>   
-        </div>
+    </div>
+    
+      
 </div>
+
 <div class="container">
   
     <div class="row" rowStyle>                  

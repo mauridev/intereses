@@ -13,6 +13,7 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
   ctaCte: ItemCtaCte[] = JSON.parse(this.fileText);
   ctaCteSegundaParte: ItemCtaCte[];
   fechaFinRemision: Date = new Date();
+  fechaFinalCalculo: Date = new Date();
   tasaDiariaEfectiva: number =  0.000133681;
   saldoFinal: number;
   saldoSubsidio: number;
@@ -31,6 +32,12 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
   alertaMensaje = '';
   alertaTipo = 'danger';
   alerta = false;
+  esBeneficioso: boolean = false;
+  tieneFechaFinRemision: boolean = false;
+  nombreArchivoLeido: string = "Seleccione el archivo de Cuenta Corriente en formato JSON";
+  textoBoton = "Calcular Saldo Productor Familiar";
+  
+
 
   constructor() { }
 
@@ -45,6 +52,7 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
   fileUpload(event) {
     const reader = new FileReader();
     reader.readAsText(event.srcElement.files[0]);
+    this.nombreArchivoLeido= event.srcElement.files[0].name;
     const me = this;
     reader.onload = () => {
       me.fileText = reader.result;
@@ -74,10 +82,22 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
       this.alertaMensaje = 'Seleccione un archivo de Cuenta Corriente en formato .JSON';
       this.alerta = true;
     } else {
-       
+        this.textoBoton = "Calcular Saldo Productor Familiar";
         this.setObligacionRealTotal();
         this.eliminarReferenciasFechaFinal();
-        this.calculoAlgoritmoPF();
+       // this.calculoAlgoritmoPF();
+    }
+  }
+
+  realizarCalculoPF = () => {
+    if (this.ctaCte.length <= 1 ) {
+      this.alertaTipo = 'danger';
+      this.alertaMensaje = 'Seleccione un archivo de Cuenta Corriente en formato .JSON';
+      this.alerta = true;
+    } else {
+      this.calculoAlgoritmoPF();
+      this.textoBoton =  ` LISTO EL POLLO  `;
+      
     }
   }
 
@@ -311,7 +331,7 @@ calcularSaldosParaCuentaCorrienteFechaMovil = () => {
   /* Setea la referencia Fecha Final con el dato que posea la propiedad Fecha Fin Remision */
   setFechaFinDeRemision = (cuentaRecibida) => {
     const itemFinDeRemision = new ItemCtaCte();
-    itemFinDeRemision.FECHA = this.fechaFinRemision;
+    itemFinDeRemision.FECHA = this.fechaFinalCalculo;
     itemFinDeRemision.REFERENCIA = 'Fecha Final';
     itemFinDeRemision.id = '000000';
     cuentaRecibida.push(itemFinDeRemision);
