@@ -1,0 +1,101 @@
+[
+    {
+        "IdRegistro": 1669,
+        "FECHA": "2016-03-08",
+        "REFERENCIA": "Pagado por BROU",
+        "IdRegistro_2": 12,
+        "DEBITO": 261,
+        "CREDITO": 0,
+        "OBLIGACION_REAL_PF": 441
+    },
+    {
+        "IdRegistro": 1670,
+        "FECHA": "2016-03-08",
+        "REFERENCIA": "Pagado por BROU",
+        "IdRegistro_2": 12,
+        "DEBITO": 3739,
+        "CREDITO": 0,
+        "OBLIGACION_REAL_PF": 0
+    },
+    {
+        "IdRegistro": 1671,
+        "FECHA": "2016-03-11",
+        "REFERENCIA": "CESION CONAPROLE",
+        "IdRegistro_2": 13,
+        "DEBITO": 4000,
+        "CREDITO": 0,
+        "OBLIGACION_REAL_PF": 0
+    },
+    {
+        "IdRegistro": 7160,
+        "FECHA": "2016-10-18",
+        "REFERENCIA": "csv CO.NA.PRO.LE. 09-2016 LTS:1.148,00 Prestación Pecuniaria  0,229 T/C:28,080 FechaTC:18/10/2016",
+        "IdRegistro_2": 1,
+        "DEBITO": 0,
+        "CREDITO": 9.36,
+        "OBLIGACION_REAL_PF": 0
+    },
+    {
+        "IdRegistro": 8993,
+        "FECHA": "2016-11-17",
+        "REFERENCIA": "csv CO.NA.PRO.LE. 10-2016 LTS:1.485,00 Prestación Pecuniaria  0,229 T/C:28,960 FechaTC:17/11/2016",
+        "IdRegistro_2": 1,
+        "DEBITO": 0,
+        "CREDITO": 11.74,
+        "OBLIGACION_REAL_PF": 0
+    },
+    {
+        "IdRegistro": 10421,
+        "FECHA": "2016-12-16",
+        "REFERENCIA": "csv CO.NA.PRO.LE. 11-2016 LTS:1.434,00 Prestación Pecuniaria  0,229 T/C:28,797 FechaTC:16/12/2016",
+        "IdRegistro_2": 1,
+        "DEBITO": 0,
+        "CREDITO": 11.4,
+        "OBLIGACION_REAL_PF": 0
+    },
+    {
+        "IdRegistro": 12268,
+        "FECHA": "2017-01-17",
+        "REFERENCIA": "csv CO.NA.PRO.LE. 12-2016 LTS:1.422,00 Prestación Pecuniaria  0,229 T/C:28,748 FechaTC:17/01/2017",
+        "IdRegistro_2": 1,
+        "DEBITO": 0,
+        "CREDITO": 11.33,
+        "OBLIGACION_REAL_PF": 0
+    },
+    {
+        "IdRegistro": 15116,
+        "FECHA": "2017-02-17",
+        "REFERENCIA": "csv CO.NA.PRO.LE. 01-2017 LTS:1.581,00 Prestación Pecuniaria  0,229 T/C:28,365 FechaTC:17/02/2017",
+        "IdRegistro_2": 1,
+        "DEBITO": 0,
+        "CREDITO": 12.76,
+        "OBLIGACION_REAL_PF": 0
+    },
+    {
+        "IdRegistro": 17370,
+        "FECHA": "2017-03-16",
+        "REFERENCIA": "csv CO.NA.PRO.LE. 02-2017 LTS:897,00 Prestación Pecuniaria  0,229 T/C:28,275 FechaTC:16/03/2017",
+        "IdRegistro_2": 1,
+        "DEBITO": 0,
+        "CREDITO": 7.26,
+        "OBLIGACION_REAL_PF": 0
+    },
+    {
+        "IdRegistro": 19078,
+        "FECHA": "2017-04-19",
+        "REFERENCIA": "DJ CO.NA.PRO.LE. 03-2017 LTS:779 PP:0,217 T/C:28,485 FechaTC:19/04/2017",
+        "IdRegistro_2": 2,
+        "DEBITO": 0,
+        "CREDITO": 5.93,
+        "OBLIGACION_REAL_PF": 0
+    },
+    {
+        "IdRegistro": 23196,
+        "FECHA": "2017-05-16",
+        "REFERENCIA": "DJ CO.NA.PRO.LE. 04-2017 LTS:0 FIN REM.:01/04/2017 PP:0,217 T/C:28,103 Fecha Val:07/06/2017",
+        "IdRegistro_2": 2,
+        "DEBITO": 0,
+        "CREDITO": 0,
+        "OBLIGACION_REAL_PF": 0
+    }
+]
