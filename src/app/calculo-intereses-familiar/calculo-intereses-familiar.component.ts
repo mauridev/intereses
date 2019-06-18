@@ -28,7 +28,7 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
   obligacionRealTotal: number;
   obligacionAdelanto: number;
   obligacionSaldo: number;
-  criterioMasBeneficioso: number = 974;
+  criterioMasBeneficioso: number = 1460;
   criterioMenosBeneficioso: number = 2371;
 
   litrosBeneficio: number;
@@ -70,20 +70,19 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
       this.saldoAInformar = saldoSubsidioFinal + this.saldoFinal;
       const diasFinRemisionFechaFinalCalculo = this.calcularCantidadDias(this.fechaFinRemision, this.fechaFinalCalculo);
       const interesesSaldoSubsidio = this.calcularFormulaInteres(saldoSubsidioFinal, diasFinRemisionFechaFinalCalculo);
-      this.saldoAInformar = interesesSaldoSubsidio + this.saldoFinal + saldoSubsidioFinal;
+      this.saldoAInformar = this.redondear(interesesSaldoSubsidio + this.saldoFinal + saldoSubsidioFinal);
       
       console.log('La cantidad de dias son: '  + diasAuxiliar);
-      console.log("delta " + deltaSubsidio);
       console.log("saldo subsidio  " + this.saldoSubsidio);
-      console.log("saldo subsidio final " + saldoSubsidioFinal);
-      console.log("saldo final " + this.saldoFinal);
+      console.log("saldo subsidio -1 " + saldoSubsidioFinal);
+      console.log(" Intereses subsidio " + interesesSaldoSubsidio);
       console.log(this.saldoAInformar);
 
     } else {
       const diasAuxiliar = this.calcularCantidadDias(fechaMenosBeneficiosa , this.fechaFinalCalculo);
       deltaSubsidio = diasAuxiliar / this.criterioMenosBeneficioso;
       saldoSubsidioFinal = (1 - deltaSubsidio) * this.saldoSubsidio;
-      this.saldoAInformar = saldoSubsidioFinal + this.saldoFinal;
+      this.saldoAInformar = this.redondear(saldoSubsidioFinal + this.saldoFinal) ;
 
       console.log('La cantidad de dias son: '  + diasAuxiliar);
       console.log("delta " + deltaSubsidio);
@@ -100,33 +99,46 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
     let deltaSubsidio;
     let saldoSubsidioFinal;
     if (this.tieneFechaFinRemision) {
-      const diasAuxiliar = this.calcularCantidadDias(fechaMasBeneficiosa , this.fechaFinRemision);      
-      deltaSubsidio = diasAuxiliar / this.criterioMenosBeneficioso;
+      const diasAuxiliar = this.calcularCantidadDias(fechaMasBeneficiosa , this.fechaFinRemision);
+      deltaSubsidio = diasAuxiliar / this.criterioMasBeneficioso;
       saldoSubsidioFinal = (1 - deltaSubsidio) * this.saldoSubsidio;
-      this.saldoAInformar = saldoSubsidioFinal + this.saldoFinal;
       const diasFinRemisionFechaFinalCalculo = this.calcularCantidadDias(this.fechaFinRemision, this.fechaFinalCalculo);
       const interesesSaldoSubsidio = this.calcularFormulaInteres(saldoSubsidioFinal, diasFinRemisionFechaFinalCalculo);
-      this.saldoAInformar = interesesSaldoSubsidio + this.saldoFinal + saldoSubsidioFinal;
+      this.saldoAInformar = this.redondear(interesesSaldoSubsidio + this.saldoFinal + saldoSubsidioFinal);
 
       console.log('La cantidad de dias son: '  + diasAuxiliar);
+      console.log('diasFinRemisionFechaFinalCalculo ' + diasFinRemisionFechaFinalCalculo);
+      
+      console.log("saldo subsidio  " + this.saldoSubsidio);
+      console.log("saldo subsidio -1 " + saldoSubsidioFinal);
+      console.log(" Intereses subsidio " + interesesSaldoSubsidio);
+      console.log(this.saldoAInformar);
+      /*console.log('La cantidad de dias son: '  + diasAuxiliar);
       console.log("delta " + deltaSubsidio);
       console.log("saldo subsidio  " + this.saldoSubsidio);
       console.log("saldo subsidio final " + saldoSubsidioFinal);
       console.log("saldo final " + this.saldoFinal);
-      console.log(this.saldoAInformar);
+      console.log(this.saldoAInformar);*/
     
     } else {
       const diasAuxiliar = this.calcularCantidadDias(fechaMasBeneficiosa , this.fechaFinalCalculo);      
-      deltaSubsidio = diasAuxiliar / this.criterioMenosBeneficioso;
+      deltaSubsidio = diasAuxiliar / this.criterioMasBeneficioso;
       saldoSubsidioFinal = (1 - deltaSubsidio) * this.saldoSubsidio;
-      this.saldoAInformar = saldoSubsidioFinal + this.saldoFinal;
+      this.saldoAInformar = this.redondear(saldoSubsidioFinal + this.saldoFinal);
+
 
       console.log('La cantidad de dias son: '  + diasAuxiliar);
+      console.log("saldo subsidio  " + this.saldoSubsidio);
+      console.log("saldo subsidio -1 " + saldoSubsidioFinal);
+      console.log(this.saldoAInformar);
+
+      /*console.log('La cantidad de dias son: '  + diasAuxiliar);
       console.log("delta " + deltaSubsidio);
       console.log("saldo subsidio  " + this.saldoSubsidio);
       console.log("saldo subsidio final " + saldoSubsidioFinal);
       console.log("saldo final " + this.saldoFinal);
       console.log(this.saldoAInformar);
+      */
     }
   }
 
