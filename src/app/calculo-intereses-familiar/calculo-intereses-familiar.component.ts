@@ -17,16 +17,19 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
   tasaDiariaEfectiva: number =  0.000133681;
   saldoFinal: number;
   saldoSubsidio: number;
+  saldoAInformar: number;
 
   esLaFechaFinalElUltimoDato = true;
   indiceFechaFinal: number;
 
   compromisoReal: number = (70685234 / 1882491174);
-  coeficienteAdelanto: number = (42104000 / 1896816669)
+  coeficienteAdelanto: number = (42104000 / 1896816669);
   coeficienteSaldo: number = (this.compromisoReal - this.coeficienteAdelanto);
   obligacionRealTotal: number;
   obligacionAdelanto: number;
   obligacionSaldo: number;
+  criterioMasBeneficioso: number = 1460;
+  criterioMenosBeneficioso: number = 2371;
 
   litrosBeneficio: number;
   alertaMensaje = '';
@@ -45,6 +48,98 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
   }
   close = () => {
     this.alerta = false;
+  }
+
+  prorrateo = () => {
+    if (this.esBeneficioso) { 
+      this.calculoMasBeneficiosoProductorFamiliar();
+    } else {
+      this.calculoMenosBeneficiosoProductorFamiliar();
+    }
+  }
+
+  calculoMenosBeneficiosoProductorFamiliar = () => {
+    console.log("Menos beneficioso");
+    const fechaMenosBeneficiosa = new Date('09/01/2016');
+    let deltaSubsidio;
+    let saldoSubsidioFinal;
+    if (this.tieneFechaFinRemision) {
+      const diasAuxiliar = this.calcularCantidadDias(fechaMenosBeneficiosa , this.fechaFinRemision);
+      deltaSubsidio = diasAuxiliar / this.criterioMenosBeneficioso;
+      saldoSubsidioFinal = (1 - deltaSubsidio) * this.saldoSubsidio;
+      this.saldoAInformar = saldoSubsidioFinal + this.saldoFinal;
+      const diasFinRemisionFechaFinalCalculo = this.calcularCantidadDias(this.fechaFinRemision, this.fechaFinalCalculo);
+      const interesesSaldoSubsidio = this.calcularFormulaInteres(saldoSubsidioFinal, diasFinRemisionFechaFinalCalculo);
+      this.saldoAInformar = this.redondear(interesesSaldoSubsidio + this.saldoFinal + saldoSubsidioFinal);
+      
+      console.log('La cantidad de dias son: '  + diasAuxiliar);
+      console.log("saldo subsidio  " + this.saldoSubsidio);
+      console.log("saldo subsidio -1 " + saldoSubsidioFinal);
+      console.log(" Intereses subsidio " + interesesSaldoSubsidio);
+      console.log(this.saldoAInformar);
+
+    } else {
+      const diasAuxiliar = this.calcularCantidadDias(fechaMenosBeneficiosa , this.fechaFinalCalculo);
+      deltaSubsidio = diasAuxiliar / this.criterioMenosBeneficioso;
+      saldoSubsidioFinal = (1 - deltaSubsidio) * this.saldoSubsidio;
+      this.saldoAInformar = this.redondear(saldoSubsidioFinal + this.saldoFinal) ;
+
+      console.log('La cantidad de dias son: '  + diasAuxiliar);
+      console.log("delta " + deltaSubsidio);
+      console.log("saldo subsidio  " + this.saldoSubsidio);
+      console.log("saldo subsidio final " + saldoSubsidioFinal);
+      console.log("saldo final " + this.saldoFinal);
+      console.log(this.saldoAInformar);
+    }      
+  }
+
+  calculoMasBeneficiosoProductorFamiliar = () => {
+    console.log('Mas beneficioso');
+    const fechaMasBeneficiosa = new Date('11/01/2015');
+    let deltaSubsidio;
+    let saldoSubsidioFinal;
+    if (this.tieneFechaFinRemision) {
+      const diasAuxiliar = this.calcularCantidadDias(fechaMasBeneficiosa , this.fechaFinRemision);
+      deltaSubsidio = diasAuxiliar / this.criterioMasBeneficioso;
+      saldoSubsidioFinal = (1 - deltaSubsidio) * this.saldoSubsidio;
+      const diasFinRemisionFechaFinalCalculo = this.calcularCantidadDias(this.fechaFinRemision, this.fechaFinalCalculo);
+      const interesesSaldoSubsidio = this.calcularFormulaInteres(saldoSubsidioFinal, diasFinRemisionFechaFinalCalculo);
+      this.saldoAInformar = this.redondear(interesesSaldoSubsidio + this.saldoFinal + saldoSubsidioFinal);
+
+      console.log('La cantidad de dias son: '  + diasAuxiliar);
+      console.log('diasFinRemisionFechaFinalCalculo ' + diasFinRemisionFechaFinalCalculo);
+      
+      console.log("saldo subsidio  " + this.saldoSubsidio);
+      console.log("saldo subsidio -1 " + saldoSubsidioFinal);
+      console.log(" Intereses subsidio " + interesesSaldoSubsidio);
+      console.log(this.saldoAInformar);
+      /*console.log('La cantidad de dias son: '  + diasAuxiliar);
+      console.log("delta " + deltaSubsidio);
+      console.log("saldo subsidio  " + this.saldoSubsidio);
+      console.log("saldo subsidio final " + saldoSubsidioFinal);
+      console.log("saldo final " + this.saldoFinal);
+      console.log(this.saldoAInformar);*/
+    
+    } else {
+      const diasAuxiliar = this.calcularCantidadDias(fechaMasBeneficiosa , this.fechaFinalCalculo);      
+      deltaSubsidio = diasAuxiliar / this.criterioMasBeneficioso;
+      saldoSubsidioFinal = (1 - deltaSubsidio) * this.saldoSubsidio;
+      this.saldoAInformar = this.redondear(saldoSubsidioFinal + this.saldoFinal);
+
+
+      console.log('La cantidad de dias son: '  + diasAuxiliar);
+      console.log("saldo subsidio  " + this.saldoSubsidio);
+      console.log("saldo subsidio -1 " + saldoSubsidioFinal);
+      console.log(this.saldoAInformar);
+
+      /*console.log('La cantidad de dias son: '  + diasAuxiliar);
+      console.log("delta " + deltaSubsidio);
+      console.log("saldo subsidio  " + this.saldoSubsidio);
+      console.log("saldo subsidio final " + saldoSubsidioFinal);
+      console.log("saldo final " + this.saldoFinal);
+      console.log(this.saldoAInformar);
+      */
+    }
   }
 
   /* Recibe el evento con el archivo JSON que se está leyendo.
@@ -114,7 +209,7 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
     this.setFechaFinDeRemision(this.ctaCte);
     this.primeraParteSetAdelantoYSaldo();
     this.segundaParteDeletePrestaciones();
-    this.setFechaFinDeRemision(this.ctaCteSegundaParte);
+    this.setFechaFinDeRemisionSubsidio(this.ctaCteSegundaParte);
     this.indiceFechaFinalBool();
 
     if ( this.esLaFechaFinalElUltimoDato === true ) {
@@ -130,6 +225,9 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
         this.calcularDiasParaCuentaCorrienteFechaMovil(this.ctaCteSegundaParte);
         this.calcularSaldoSubsidioParaCuentaCorriente();
     }
+
+    this.prorrateo();
+
   }
 
 
@@ -326,6 +424,28 @@ calcularSaldosParaCuentaCorrienteFechaMovil = () => {
         }
       }
     }
+  }
+
+  setFechaFinDeRemisionSubsidio = (cuentaRecibida) => {
+    if (this.tieneFechaFinRemision) {
+      const itemFinDeRemision = new ItemCtaCte();
+      itemFinDeRemision.FECHA = this.fechaFinRemision;
+      itemFinDeRemision.REFERENCIA = 'Fecha Final';
+      itemFinDeRemision.id = '000000';
+      cuentaRecibida.push(itemFinDeRemision);
+      this.eliminarReferenciasInteresGenerado(cuentaRecibida);
+      this.ordenarPorFecha(cuentaRecibida);
+    } else {
+      const itemFinDeRemision = new ItemCtaCte();
+      itemFinDeRemision.FECHA = this.fechaFinalCalculo;
+      itemFinDeRemision.REFERENCIA = 'Fecha Final';
+      itemFinDeRemision.id = '000000';
+      cuentaRecibida.push(itemFinDeRemision);
+      this.eliminarReferenciasInteresGenerado(cuentaRecibida);
+      this.ordenarPorFecha(cuentaRecibida);
+    }
+   
+
   }
 
   /* Setea la referencia Fecha Final con el dato que posea la propiedad Fecha Fin Remision */
