@@ -23,7 +23,7 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
   indiceFechaFinal: number;
 
   compromisoReal: number = (70685234 / 1882491174);
-  coeficienteAdelanto: number = (42104000 / 1896816669)
+  coeficienteAdelanto: number = (42104000 / 1896816669);
   coeficienteSaldo: number = (this.compromisoReal - this.coeficienteAdelanto);
   obligacionRealTotal: number;
   obligacionAdelanto: number;
