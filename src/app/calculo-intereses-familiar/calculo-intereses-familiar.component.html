@@ -1,4 +1,56 @@
 <div class="container">
+  <div class="row justify-content-center" >
+
+    <div class="card border-success mb-4" style="max-width: 18rem; margin-right: 15px;">
+      <div class="card-header">a - IMPORTE COBRADO</div>
+      <div class="card-body text-success">
+        <h3 class="card-title">{{ importeCobrado }}</h3>    
+      </div>
+    </div>
+
+    <div class="card border-success mb-4" style="max-width: 18rem; margin-right: 15px;">
+        <div class="card-header">b - COMPROMISO REAL</div>
+        <div class="card-body text-success">
+          <h3 class="card-title">{{ importeCobrado - obligacionRealTotal }}</h3>    
+        </div>
+    </div>
+
+    <div class="card border-success mb-4" style="max-width: 18rem; margin-right: 15px;">
+        <div class="card-header">a - b - COMPROMISO REAL</div>
+        <div class="card-body text-success">
+          <h3 class="card-title">{{ obligacionRealTotal }}</h3>    
+        </div>
+    </div>
+
+  </div>
+
+  <div class="row justify-content-center" >
+
+      <div class="card border-success mb-4" style="max-width: 18rem; margin-right: 15px;">
+        <div class="card-header">j - SALDO A INFORMAR</div>
+        <div class="card-body text-success">
+          <h3 class="card-title">{{ saldoAInformar }}</h3>    
+        </div>
+      </div>
+  
+      <div class="card border-success mb-4" style="max-width: 18rem; margin-right: 15px;">
+          <div class="card-header">h - SALDO COMPROMISO REAL</div>
+          <div class="card-body text-success">
+            <h3 class="card-title">{{ saldoFinal }}</h3>    
+          </div>
+      </div>
+  
+      <div class="card border-success mb-4" style="max-width: 18rem; margin-right: 15px;">
+          <div class="card-header">j - h - SALDO SUBSIDIO</div>
+          <div class="card-body text-success">
+            <h3 class="card-title">{{ saldoAInformar - saldoFinal }}</h3>    
+          </div>
+      </div>
+  
+    </div>
+</div>
+
+<div class="container" *ngIf="ayudaProgramador">
     <div class="row">
         <div class="col-sm-3">
           <div class="card">
@@ -156,7 +208,7 @@
             </div>
             <hr>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="custom-control custom-switch">
                         <input 
                           type="checkbox" 
@@ -164,16 +216,17 @@
                           [(ngModel)]="tieneFechaFinRemision"
                           id="idFechaFinRemision">
                         <label class="custom-control-label" for="idFechaFinRemision">                          
-                          <div class="col-md-12"   *ngIf="tieneFechaFinRemision; else noTieneFechaFinRemision">Fecha Fin Remision
-                              <input class="form-control"  [(ngModel)]="fechaFinRemision"  type="text" ngbDatepicker #d2="ngbDatepicker" (dateSelect)="onDateSelect($event)"/>
-                              <button (click)="d2.toggle()" class="btn btn-secondary">Calendario Fecha Fin Remsión</button>
-                          </div>
-                        </label>
-                        <ng-template #noTieneFechaFinRemision>
-                            <span>Utiliza Fecha Fin Remisión?</span>
-                        </ng-template>
-                      </div>
+                          Utiliza Fecha Fin Remisión?
+                        </label>                        
+                    </div>
                 </div>   
+                <div class="col-md-6">
+                  <div class="col-md-12"   *ngIf="tieneFechaFinRemision">Fecha Fin Remision
+                    <input class="form-control"  [(ngModel)]="fechaFinRemision"  type="text" ngbDatepicker #d2="ngbDatepicker" (dateSelect)="onDateSelect($event)"/>
+                    <button (click)="d2.toggle()" class="btn btn-secondary">Calendario Fecha Fin Remsión</button>
+                 </div>
+                  
+                </div>
             </div>
             <hr>
             <div class="row">

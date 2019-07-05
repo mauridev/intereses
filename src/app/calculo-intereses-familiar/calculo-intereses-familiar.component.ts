@@ -18,6 +18,7 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
   saldoFinal: number;
   saldoSubsidio: number;
   saldoAInformar: number;
+  importeCobrado: number = 0;
 
   esLaFechaFinalElUltimoDato = true;
   indiceFechaFinal: number;
@@ -39,6 +40,7 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
   tieneFechaFinRemision: boolean = false;
   nombreArchivoLeido: string = "Seleccione el archivo de Cuenta Corriente en formato JSON";
   textoBoton = "Calcular Saldo Productor Familiar";
+  ayudaProgramador: boolean = false;
   
 
 
@@ -183,6 +185,8 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
        // this.calculoAlgoritmoPF();
     }
   }
+
+ 
 
   realizarCalculoPF = () => {
     if (this.ctaCte.length <= 1 ) {
@@ -413,6 +417,9 @@ calcularSaldosParaCuentaCorrienteFechaMovil = () => {
     let auxiliarNumerico = 1;
     for (let i = 0; i < this.ctaCte.length; i ++) {
       if (this.ctaCte[i].IdRegistro_2 === 12 || this.ctaCte[i].IdRegistro_2 === 13) {
+        this.importeCobrado = this.importeCobrado + this.ctaCte[i].DEBITO;
+        //console.log('DEBITO: ' +this.ctaCte[i].DEBITO);
+        
         if (auxiliarNumerico === 1) {
           this.ctaCte[i].DEBITO = this.obligacionAdelanto;
           auxiliarNumerico = auxiliarNumerico + 1;
