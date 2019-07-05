@@ -40,7 +40,9 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
   tieneFechaFinRemision: boolean = false;
   nombreArchivoLeido: string = "Seleccione el archivo de Cuenta Corriente en formato JSON";
   textoBoton = "Calcular Saldo Productor Familiar";
+
   ayudaProgramador: boolean = false;
+  calculando: boolean = false;
   
 
 
@@ -195,9 +197,44 @@ export class CalculoInteresesFamiliarComponent implements OnInit {
       this.alerta = true;
     } else {
       this.calculoAlgoritmoPF();
-      this.textoBoton =  ` LISTO EL POLLO  `;
+      this.calculando = true;
+      this.textoBoton =  ` Calcular Saldo Productor Familiar  `;
       
     }
+  }
+
+  realizarNuevoCalculo = () => {
+
+    this.fileText = '[{}]';
+    this.ctaCte = JSON.parse(this.fileText);
+    this.ctaCteSegundaParte = [];
+    this.fechaFinRemision  = new Date();
+    this.fechaFinalCalculo  = new Date();
+  
+    this. saldoFinal = 0;
+    this.saldoSubsidio = 0;
+    this.saldoAInformar = 0;
+    this.importeCobrado  = 0;
+
+    this.esLaFechaFinalElUltimoDato = true;
+    this.indiceFechaFinal = 0;
+
+  
+    this.obligacionRealTotal = 0;
+    this.obligacionAdelanto = 0;
+    this.obligacionSaldo = 0;
+  
+    this.litrosBeneficio = 0;
+    this.alertaMensaje = '';
+    this.alerta = false;
+    this.esBeneficioso = false;
+    this.tieneFechaFinRemision = false;
+    
+
+  
+
+
+    this.calculando = false;
   }
 
   /* Elimina toda referencia que sea Fecha Fina */
