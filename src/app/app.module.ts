@@ -13,6 +13,7 @@ import { from } from 'rxjs';
 import { HeaderComponent } from './header/header.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { CalculoInteresesFamiliarComponent } from './calculo-intereses-familiar/calculo-intereses-familiar.component';
+import { CustomFamiliarComponent } from './custom-familiar/custom-familiar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CalculoInteresesFamiliarComponent } from './calculo-intereses-familiar/
     CalculoInteresesComponent,
     HeaderComponent,
     InicioComponent,
-    CalculoInteresesFamiliarComponent
+    CalculoInteresesFamiliarComponent,
+    CustomFamiliarComponent
   ],
   imports: [
     BrowserModule,
